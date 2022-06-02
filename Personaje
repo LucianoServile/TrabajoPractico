@@ -1,0 +1,30 @@
+package HeroesVillanos;
+
+import java.util.HashMap;
+
+public class Personaje extends Combatiente {
+
+	private String nombreCivil;
+
+	private static final int max_value_skill = 1000;
+	private HashMap<Caracteristica, Integer> caracteristicas;
+
+	public Personaje(String nombreCivil, String nombreHeroe, Equipo e, int inteligencia, int destreza, int fuerza,
+			int resistencia) {
+		super(nombreHeroe, e);
+		this.nombreCivil = nombreCivil;
+		caracteristicas.put(Caracteristica.DESTREZA, destreza);
+		caracteristicas.put(Caracteristica.INTELIGENCIA, inteligencia);
+		caracteristicas.put(Caracteristica.FUERZA, fuerza);
+		caracteristicas.put(Caracteristica.RESISTENCIA, resistencia);
+	}
+
+	public String getNombreCivil() {
+		return nombreCivil;
+	}
+
+	public int getCaracteristica(Caracteristica c) {
+		return this.caracteristicas.get(c);
+	}
+
+}
