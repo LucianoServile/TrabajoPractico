@@ -1,4 +1,4 @@
-package TP_Heroes_Villanos;
+package HeroesVillanos;
 
 import javax.swing.JOptionPane;
 
