@@ -1,4 +1,4 @@
-package TP_Heroes_Villanos;
+package HeroesVillanos;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ public class SubMenu extends ItemAbstracto{
 	
 	@Override
 	public void ejecutarFuncion() {
-		// TODO ApÈndice de mÈtodo generado autom·ticamente
+		// TODO Ap√©ndice de m√©todo generado autom√°ticamente
 		
 	}
 
