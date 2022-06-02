@@ -1,4 +1,4 @@
-package TP_Heroes_Villanos;
+package HeroesVillanos;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 public class Sistema {
 
@@ -73,7 +72,7 @@ public class Sistema {
 			while (oneLine != null) {
 				String[] datos = oneLine.split(", ");
 				for (String dato : datos) {
-					if (personajes.get(dato).getTipoDePersonaje() == "Héroe") {
+					if (personajes.get(dato).getTipoDePersonaje() == "HÃ©roe") {
 						liga_heroes.add(personajes.get(dato));
 						
 					} else {
@@ -86,14 +85,6 @@ public class Sistema {
 				oneLine = lector.readLine();
 			}
 			
-			for(Personaje  p : liga_villanos) {
-				System.out.println(p.getNombrePersonaje());
-			}
-			
-			for(Personaje  p : liga_heroes) {
-				System.out.println(p.getNombrePersonaje());
-			}
-
 			lector.close();
 		} catch (FileNotFoundException e) {
 			System.err.println("No se encontro archivo 'personajes.in'");
