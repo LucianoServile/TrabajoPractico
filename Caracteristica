@@ -1,0 +1,6 @@
+package HeroeVillano;
+
+public enum Caracteristica {
+	
+	INTELIGENCIA,FUERZA,DESTREZA,RESISTENCIA
+}
