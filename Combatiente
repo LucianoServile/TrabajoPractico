@@ -1,0 +1,23 @@
+package HeroeVillano;
+
+public class Combatiente implements Comparable {
+
+	private String nombre;
+	private Equipo equipo;
+
+	public Combatiente(String nombre, Equipo e) {
+		this.nombre = nombre;
+		this.equipo = e;
+	}
+
+	public void enfrentarCon(Combatiente combatiente, Caracteristica c) {
+
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}
