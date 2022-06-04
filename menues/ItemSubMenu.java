@@ -3,8 +3,8 @@ package menues;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ItemSubMenu extends AbstractItem{
-	ArrayList<AbstractItem> opciones = new ArrayList<AbstractItem>();
+public class ItemSubMenu extends ItemAbstracto{
+	ArrayList<ItemAbstracto> opciones = new ArrayList<ItemAbstracto>();
 	//HashMap<int key, String value> opciones = new HashMap<int key,String value>();
 
 	public ItemSubMenu(String nombre) {
@@ -12,7 +12,7 @@ public class ItemSubMenu extends AbstractItem{
 		super(nombre);
 	}
 	 
-	public void add(AbstractItem item) {
+	public void add(ItemAbstracto item) {
 		this.opciones.add(item);
 	}
 	
@@ -22,7 +22,7 @@ public class ItemSubMenu extends AbstractItem{
 	
 	
 	public void listarOpciones() {
-		Iterator<AbstractItem> itr = this.opciones.listIterator();
+		Iterator<ItemAbstracto> itr = this.opciones.listIterator();
 		int i = 0;
 		System.out.println(this.nombre);
 		while(itr.hasNext()) {

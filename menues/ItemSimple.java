@@ -1,6 +1,6 @@
 package menues;
 
-public class ItemSimple extends AbstractItem{
+public class ItemSimple extends ItemAbstracto{
 	String funcion; //Se seteara desde el hijo especificamente segun cual sea la funcion. 
 	
 	public ItemSimple(String nombre) {
