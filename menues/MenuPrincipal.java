@@ -6,7 +6,7 @@ import java.util.Iterator;
 public class MenuPrincipal { //Podría ser una clase heredada de SubMenuItem que tenga el constructor privado para ser Singleton
 	private static MenuPrincipal instancia;
 	private String nombre;
-	private ArrayList<AbstractItem> opciones = new ArrayList<AbstractItem>();
+	private ArrayList<ItemAbstracto> opciones = new ArrayList<ItemAbstracto>();
 	
 	private MenuPrincipal(String nombre) {
 		this.nombre = nombre;
@@ -19,12 +19,12 @@ public class MenuPrincipal { //Podría ser una clase heredada de SubMenuItem que
 		return instancia;
 	}
 	
-	public void agregarOpciones(AbstractItem item) {
+	public void agregarOpciones(ItemAbstracto item) {
 		this.opciones.add(item);
 	}
 	
 	public void listarOpciones() {
-		Iterator<AbstractItem> itr = this.opciones.listIterator();
+		Iterator<ItemAbstracto> itr = this.opciones.listIterator();
 		int i = 0;
 		while(itr.hasNext()) {
 			System.out.print(i + "- ");

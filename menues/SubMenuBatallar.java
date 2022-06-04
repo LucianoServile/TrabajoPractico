@@ -1,11 +1,11 @@
 package menues;
 
-public class SubMenuBatallar extends SubMenuItem{
+public class SubMenuBatallar extends ItemSubMenu{
 	public SubMenuBatallar(String nombre) {
 		super(nombre);
-		super.opciones.add(new SimpleItem("Batalla 1 vs 1"));
-		super.opciones.add(new SimpleItem("Batalla 1 vs Liga"));
-		super.opciones.add(new SimpleItem("Batalla Liga vs Liga"));
+		super.opciones.add(new ItemSimple("Batalla 1 vs 1"));
+		super.opciones.add(new ItemSimple("Batalla 1 vs Liga"));
+		super.opciones.add(new ItemSimple("Batalla Liga vs Liga"));
 	}
 	
 	@Override
@@ -14,7 +14,7 @@ public class SubMenuBatallar extends SubMenuItem{
 		System.out.println("Batallando");
 	}
 	
-	public void agregarBatalla(AbstractItem batalla) {
+	public void agregarBatalla(ItemAbstracto batalla) {
 		super.add(batalla);
 	}
 	
