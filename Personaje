@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class Personaje extends Combatiente {
 
 	private String nombreCivil;
+	private boolean esGanador = false;
 
 	private static final int max_value_skill = 1000;
 	private HashMap<Caracteristica, Integer> caracteristicas;
@@ -13,6 +14,7 @@ public class Personaje extends Combatiente {
 			int resistencia) {
 		super(nombreHeroe, e);
 		this.nombreCivil = nombreCivil;
+		caracteristicas = new HashMap<Caracteristica, Integer>();
 		caracteristicas.put(Caracteristica.DESTREZA, destreza);
 		caracteristicas.put(Caracteristica.INTELIGENCIA, inteligencia);
 		caracteristicas.put(Caracteristica.FUERZA, fuerza);
@@ -22,9 +24,44 @@ public class Personaje extends Combatiente {
 	public String getNombreCivil() {
 		return nombreCivil;
 	}
+	
+	public String getNombrePersonaje() {
+		return super.getNombre();
+	}
 
 	public int getCaracteristica(Caracteristica c) {
 		return this.caracteristicas.get(c);
+	}
+	
+	public Equipo getEquipo(){
+		return super.getEquipo();
+	}
+	
+	public void enfrentarCon(Personaje otro, Caracteristica c) {
+		int resultado = this.caracteristicas.get(c).compareTo(otro.getCaracteristica(c));
+		
+		switch (resultado) {
+		case -1: {
+			otro.esGanador(true);
+			break;
+		}
+		case 0: {
+			enfrentarCon(otro, c);
+			break;
+		}
+		case 1: {
+			esGanador(true);
+			break;
+		}	
+	    }
+        }
+
+        public boolean ganador(){
+		return esGanador;
+	}
+	
+	public void esGanador(boolean gano) {
+		esGanador = gano;
 	}
 
 }
