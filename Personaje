@@ -10,8 +10,8 @@ public class Personaje extends Combatiente {
 	private static final int max_value_skill = 1000;
 	private HashMap<Caracteristica, Integer> caracteristicas;
 
-	public Personaje(String nombreCivil, String nombreHeroe, Equipo e, int inteligencia, int destreza, int fuerza,
-			int resistencia) {
+	public Personaje(String nombreCivil, String nombrePersonaje, Equipo e,
+			int inteligencia, int fuerza, int resistencia , int destreza) {
 		super(nombreHeroe, e);
 		this.nombreCivil = nombreCivil;
 		caracteristicas = new HashMap<Caracteristica, Integer>();
