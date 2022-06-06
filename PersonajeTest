@@ -1,0 +1,66 @@
+import junit.framework.Assert;
+
+import org.junit.Test;
+
+public class PersonajeTest {
+	
+	
+	@Test
+	public void enfrentamientoPorInteligenciaTest(){
+		Personaje ironman = new Personaje("Tony Stark", "Iron Man", Equipo.HEROE, 98, 88, 90, 84);		
+		Personaje thanos = new Personaje("Thanos", "Thanos", Equipo.VILLANO, 100, 98, 98, 96);
+
+		/***
+		 * iNTELIGENCIA TIENEN thanos 100, ironman 98
+		 */
+		ironman.enfrentarCon(thanos, Caracteristica.INTELIGENCIA);
+		
+		Assert.assertEquals(true,thanos.ganador());
+
+	}
+	
+	@Test
+	public void enfrentamientoPorDestrezaTest(){
+		Personaje ironman = new Personaje("Tony Stark", "Iron Man", Equipo.HEROE, 98, 88, 90, 84);		
+		Personaje thanos = new Personaje("Thanos", "Thanos", Equipo.VILLANO, 100, 98, 98, 96);
+
+		/***
+		 * DESTREZA TIENEN thanos 98, ironman 88
+		 */
+	
+		ironman.enfrentarCon(thanos, Caracteristica.DESTREZA);
+		
+		Assert.assertEquals(true,thanos.ganador());
+
+	}
+
+	@Test
+	public void enfrentamientoPorFuerzaTest(){
+		Personaje ironman = new Personaje("Tony Stark", "Iron Man", Equipo.HEROE, 98, 88, 90, 84);		
+		Personaje thanos = new Personaje("Thanos", "Thanos", Equipo.VILLANO, 100, 98, 98, 96);
+
+		/***
+		 * FUERZA TIENEN thanos 98, ironman 90
+		 */
+	
+		ironman.enfrentarCon(thanos, Caracteristica.FUERZA);
+		
+		Assert.assertEquals(true,thanos.ganador());
+
+	}
+	
+	@Test
+	public void enfrentamientoPorVelocidadTest(){
+		Personaje ironman = new Personaje("Tony Stark", "Iron Man", Equipo.HEROE, 98, 88, 90, 96);		
+		Personaje thanos = new Personaje("Thanos", "Thanos", Equipo.VILLANO, 100, 98, 98, 82);
+
+		/***
+		 * FRESISTENCIA TIENEN thanos 82, ironman 96
+		 */
+	
+		ironman.enfrentarCon(thanos, Caracteristica.RESISTENCIA);
+		
+		Assert.assertEquals(true,ironman.ganador());
+
+	}
+}
