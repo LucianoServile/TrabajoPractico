@@ -1,0 +1,24 @@
+public class Villano extends Personaje{
+
+	public Villano(String nombreCivil, String nombreVillano, Equipo e,
+			int inteligencia, int destreza, int fuerza, int resistencia) {
+		super(nombreCivil, nombreVillano, e, inteligencia, destreza, fuerza, resistencia);
+	}
+
+	public String getNombreCivil() {
+		return super.getNombreCivil();
+	}
+	
+	public String getNombreVillano() {
+		return super.getNombrePersonaje();
+	}
+	
+	public Equipo getEquipo() {
+		return super.getEquipo();
+	}
+	
+	public int getCaracteristica(Caracteristica c) {
+		return super.getCaracteristica(c);
+	}
+
+}
