@@ -1,0 +1,24 @@
+public class Heroe extends Personaje {
+
+	public Heroe(String nombreCivil, String nombreHeroe, Equipo e,
+			int inteligencia, int destreza, int fuerza, int resistencia) {
+		super(nombreHeroe, nombreHeroe, e, resistencia, resistencia, resistencia, resistencia);
+	}
+	
+	public String getNombreCivil() {
+		return super.getNombreCivil();
+	}
+	
+	public String getNombreHeroe() {
+		return super.getNombrePersonaje();
+	}
+	
+	public Equipo getEquipo() {
+		return super.getEquipo();
+	}
+	
+	public int getCaracteristica(Caracteristica c) {
+		return super.getCaracteristica(c);
+	}
+  
+}
