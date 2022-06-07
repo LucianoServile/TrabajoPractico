@@ -28,13 +28,6 @@ public class Liga extends Combatiente {
 	public void eliminarCombatiente(Combatiente combatiente) {
 		combatientes.remove(combatiente);
 	}
-	
-        @Override
-	public int compare(Caracteristica o1, Caracteristica o2) {
-		// creo que este comparador va en caracteristicas, en ese caso habria que elimnarla 
-		// de combatiente y las clases hijas
-		return 0;
-	}
 
 	@Override
 	public int getCaracteristica(Caracteristica c) {
@@ -44,9 +37,24 @@ public class Liga extends Combatiente {
 
 	@Override
 	public boolean esGanador(Combatiente combatiente, Caracteristica c) {
-		// este seria el metodo enfrentarCon , aca ponemos o personajes o ligas que son
-		// combatientes y el metodo devuelve si el combatiente actual es ganador o gana el retador
-		return false;
+		boolean esGanador = false;
+		Caracteristica cAux;
+		if (this.getCaracteristica(c) == combatiente.getCaracteristica(c)) {
+			esGanador(combatiente, c.nextCaracteristica(c));
+			cAux = c.nextCaracteristica(c);
+
+			if (c.equals(cAux)) {
+				System.out.println("El resultado de la pelea es empate");
+			}
+
+		} else if (this.getCaracteristica(c) > combatiente.getCaracteristica(c)) {
+			esGanador = true;
+			System.out.println("El combatiente " + this.getNombre() + " es el vencedor del combate");
+
+		} else if (this.getCaracteristica(c) < combatiente.getCaracteristica(c)) {
+			System.out.println("El combatiente " + combatiente.getNombre() + " es el vencedor del combate");
+		}
+		return esGanador;
 	}
 	
 }
