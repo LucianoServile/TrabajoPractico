@@ -1,23 +1,29 @@
 package HeroeVillano;
 
 import java.util.Comparator;
+import java.util.HashMap;
 
 public abstract class Combatiente implements Comparator<Caracteristica> {
 
 	private String nombre; // nombre de liga o personaje
-	private Equipo equipo; // heroe o villano
+	private HashMap<Caracteristica, Integer> caracteristicas;
 
-	public Combatiente(String nombre, Equipo equipo) {
+	public Combatiente(String nombre, int velocidad, int fuerza, int resistencia, int destreza) {
 		this.nombre = nombre;
-		this.equipo = equipo;
+		caracteristicas.put(Caracteristica.FUERZA, fuerza);
+		caracteristicas.put(Caracteristica.VELOCIDAD, velocidad);
+		caracteristicas.put(Caracteristica.DESTREZA, destreza);
+		caracteristicas.put(Caracteristica.RESISTENCIA, resistencia);
 	}
 
-	public abstract int getCaracteristica(Caracteristica c);
-
+	public int getCaracteristica(Caracteristica c) {
+		return caracteristicas.get(c);
+	}
+	
 	public abstract boolean esGanador(Combatiente combatiente, Caracteristica c);
 
-	public Equipo getEquipo() {
-		return this.equipo;
+	public HashMap<Caracteristica, Integer> getCaracteristicas() {
+		return caracteristicas;
 	}
 
 	public int comparator() {
