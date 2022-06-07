@@ -1,7 +1,0 @@
-package HeroeVillano;
-
-public enum Equipo {
-
-	HEROE, VILLANO
-  
-}
