@@ -1,24 +1,28 @@
-public class Heroe extends Personaje {
+package heroesVillanos
 
-	public Heroe(String nombreCivil, String nombreHeroe, Equipo e,
-			int inteligencia, int destreza, int fuerza, int resistencia) {
-		super(nombreHeroe, nombreHeroe, e, resistencia, resistencia, resistencia, resistencia);
+public class Heroe extends Combatiente {
+
+	private String nombreCivil;
+
+	public Heroe(String nombreCivil, String nombre, int velocidad, int fuerza, int resistencia, int destreza) {
+		super(nombre, velocidad, fuerza, resistencia, destreza);
+		this.nombreCivil = nombreCivil;
 	}
-	
+
+	@Override
+	public int compare(Caracteristica o1, Caracteristica o2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean esGanador(Combatiente combatiente, Caracteristica c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	public String getNombreCivil() {
-		return super.getNombreCivil();
+		return nombreCivil;
 	}
-	
-	public String getNombreHeroe() {
-		return super.getNombrePersonaje();
-	}
-	
-	public Equipo getEquipo() {
-		return super.getEquipo();
-	}
-	
-	public int getCaracteristica(Caracteristica c) {
-		return super.getCaracteristica(c);
-	}
-  
+
 }
