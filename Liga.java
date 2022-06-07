@@ -45,6 +45,7 @@ public class Liga extends Combatiente {
 
 			if (c.equals(cAux)) {
 				System.out.println("El resultado de la pelea es empate");
+			        return esGanador;
 			}
 
 		} else if (this.getCaracteristica(c) > combatiente.getCaracteristica(c)) {
