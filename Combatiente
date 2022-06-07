@@ -1,30 +1,31 @@
 package HeroeVillano;
 
-public class Combatiente implements Comparable {
+import java.util.Comparator;
 
-	private String nombre;
-	private Equipo equipo;
+public abstract class Combatiente implements Comparator<Caracteristica> {
 
-	public Combatiente(String nombre, Equipo e) {
+	private String nombre; // nombre de liga o personaje
+	private Equipo equipo; // heroe o villano
+
+	public Combatiente(String nombre, Equipo equipo) {
 		this.nombre = nombre;
-		this.equipo = e;
+		this.equipo = equipo;
 	}
 
-	public void enfrentarCon(Combatiente combatiente, Caracteristica c) {
+	public abstract int getCaracteristica(Caracteristica c);
 
+	public abstract boolean esGanador(Combatiente combatiente, Caracteristica c);
+
+	public Equipo getEquipo() {
+		return this.equipo;
 	}
 
-	@Override
-	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
+	public int comparator() {
 		return 0;
 	}
 
-        public String getNombre(){
-		return this.nombre;
-	}
-
-	public Equipo getEquipo(){
-		return this.equipo;
+	public String getNombre() {
+		return nombre;
 	}
 }
+
