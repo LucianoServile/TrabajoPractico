@@ -1,41 +1,32 @@
 package HeroesVillanos;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.ArrayList;
 
-public class Liga extends Combatiente{
-	
-	private HashSet<Personaje> personajes;
-	private HashMap<Caracteristica, Integer> caracteristicas;
+public class Liga extends Combatiente {
+
 	private ArrayList<Combatiente> combatientes = new ArrayList<Combatiente>();
-	
-	public Liga(String nombreLiga,Equipo equipo,HashSet<Personaje> personajes, HashMap<Caracteristica, Integer> caracteristicas) {
-		super(nombreLiga, equipo);
-		this.personajes = personajes;
-		this.caracteristicas = caracteristicas;
+
+	public Liga(String nombreLiga, int velocidad, int fuerza, int resistencia, int destreza) {
+		super(nombreLiga, velocidad, fuerza, resistencia, destreza);
 	}
 
-	public void listarPersonaje() {
-		
-		for(Personaje p : personajes) {
-			System.out.println("Personaje: " + p.getNombre());
+	public void listarCombatientes() {
+
+		for (Combatiente c : combatientes) {
+			System.out.println("Combatiente: " + c.getNombre());
 		}
-		
 	}
-	
-	public void agregarPersonaje(Personaje personaje) {
-		personajes.add(personaje);
+
+	public void agregarCombatiente(Combatiente combatiente) {
+		combatientes.add(combatiente);
 	}
 
 	public void promediarHabilidades(Caracteristica c) {
-		for(Personaje p : personajes) {
-			System.out.println("Personaje: " + p.getNombre());
-		}
+		
 	}
-	
-	public void eliminarPersonaje(Personaje personaje) {
-		personajes.remove(personaje);
+
+	public void eliminarCombatiente(Combatiente combatiente) {
+		combatientes.remove(combatiente);
 	}
 	
         @Override
