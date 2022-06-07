@@ -10,12 +10,6 @@ public class Heroe extends Combatiente {
 	}
 
 	@Override
-	public int compare(Caracteristica o1, Caracteristica o2) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public boolean esGanador(Combatiente combatiente, Caracteristica c) {
 		// TODO Auto-generated method stub
 		return false;
