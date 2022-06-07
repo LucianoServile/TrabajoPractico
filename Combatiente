@@ -1,9 +1,8 @@
 package HeroeVillano;
 
-import java.util.Comparator;
 import java.util.HashMap;
 
-public abstract class Combatiente implements Comparator<Caracteristica> {
+public abstract class Combatiente {
 
 	private String nombre; // nombre de liga o personaje
 	private HashMap<Caracteristica, Integer> caracteristicas;
@@ -21,14 +20,6 @@ public abstract class Combatiente implements Comparator<Caracteristica> {
 	}
 	
 	public abstract boolean esGanador(Combatiente combatiente, Caracteristica c);
-
-	public HashMap<Caracteristica, Integer> getCaracteristicas() {
-		return caracteristicas;
-	}
-
-	public int comparator() {
-		return 0;
-	}
 
 	public String getNombre() {
 		return nombre;
