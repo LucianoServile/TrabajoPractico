@@ -11,8 +11,9 @@ public class Villano extends Combatiente {
 	
 	// este metodo devuelve true si el combatiente actual le gana al combatiente ingresado de acuerdo a la 
 	// caracteristica solicitada, si empatan definen x la siguiente caracteristica.
+	//falta agregar q un villano solo se pueda enfrentar a un heroe/liga de heroes.
 	
-	@Override //falta agregar q un villano solo se pueda enfrentar a un heroe
+	@Override 
 	public boolean esGanador(Combatiente combatiente, Caracteristica c) {
 		boolean esGanador = false;
 		Caracteristica cAux;
