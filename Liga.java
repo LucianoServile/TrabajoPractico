@@ -34,6 +34,10 @@ public class Liga extends Combatiente {
 		
 		return caracteristicas.get(c);
 	}
+	
+	// este metodo devuelve true si la liga actual le gana al combatiente ingresado de acuerdo a la 
+	// caracteristica solicitada, si empatan definen x la siguiente caracteristica.
+	//falta agregar q una liga de heroes/villanos solo se pueda enfrentar a su combatiente opuesto (heroe/villano)
 
 	@Override
 	public boolean esGanador(Combatiente combatiente, Caracteristica c) {
@@ -50,7 +54,7 @@ public class Liga extends Combatiente {
 
 		} else if (this.getCaracteristica(c) > combatiente.getCaracteristica(c)) {
 			esGanador = true;
-			System.out.println("El combatiente " + this.getNombre() + " es el vencedor del combate");
+			System.out.println("La liga " + this.getNombre() + " es la vencedora del combate");
 
 		} else if (this.getCaracteristica(c) < combatiente.getCaracteristica(c)) {
 			System.out.println("El combatiente " + combatiente.getNombre() + " es el vencedor del combate");
