@@ -8,8 +8,12 @@ public class Heroe extends Combatiente {
 		super(nombre, velocidad, fuerza, resistencia, destreza);
 		this.nombreCivil = nombreCivil;
 	}
+	
+	// este metodo devuelve true si el heroe actual le gana al combatiente ingresado de acuerdo a la 
+	// caracteristica solicitada, si empatan definen x la siguiente caracteristica.
+	//falta agregar q un heroe solo se pueda enfrentar a un villano
 
-	@Override //falta agregar q un heroe solo se pueda enfrentar a un villano
+	@Override 
 	public boolean esGanador(Combatiente combatiente, Caracteristica c) {
 		boolean esGanador = false;
 		Caracteristica cAux;
