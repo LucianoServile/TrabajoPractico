@@ -77,4 +77,8 @@ public class Liga extends Combatiente{
 //		return esGanador;
 //	}
 	
+	public List<Combatiente> listarCombatienteOrdenado(Caracteristica c){
+		return null;
+	}
+	
 }
