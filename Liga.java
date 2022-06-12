@@ -1,9 +1,6 @@
 package HeroesVillanos;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 public class Liga extends Combatiente{
 
@@ -12,7 +9,7 @@ public class Liga extends Combatiente{
 	
 	public Liga(String nombre, Equipo equipo, int velocidad, int fuerza, int resistencia, int destreza, HashSet<Combatiente> combatientes) {
 		super(nombre, equipo, velocidad, fuerza, resistencia, destreza);
-		this.combatientes = combatientes;
+		Liga.combatientes = combatientes;
 	}
 
 	
@@ -21,53 +18,63 @@ public class Liga extends Combatiente{
 		if(this.getEquipo() == combatiente.getEquipo()) {
 			combatientes.add(combatiente);
 		} else {
-			System.err.println(combatiente.getNombre() + " No es del mismo categoria");
+			System.err.println(combatiente.getNombre() + " No es del mismo equipo");
 		}
 		
 	}
 
-	private int promediarHabilidades(Caracteristica caracteristica) {
-		
-		
-		
-		
-		
-		return 0;
+	//este método tiene que ser usado por otro metodo
+	
+	private double promediarHabilidades(Caracteristica caracteristica) {
+		double promedio = 0;
+		int cantidad = 0;
+		for (Combatiente c: combatientes) {
+			promedio += c.getCaracteristica(caracteristica);
+			cantidad++;
+		}
+		return promedio/cantidad;
 		
 	}
 	
-	public void eliminarPersonaje(Combatiente combatiente) {
+	public void eliminarCombatiente(Combatiente combatiente) {
 		combatientes.remove(combatiente);
 	}
-
-
-
-	@Override
-	public boolean esGanador(Combatiente combatiente, Caracteristica c) {
-		boolean esGanador = false;
-		Caracteristica cAux;
-		if (this.getCaracteristica(c) == combatiente.getCaracteristica(c)) {
-			esGanador(combatiente, c.nextCaracteristica(c));
-			cAux = c.nextCaracteristica(c);
-
-			if (c.equals(cAux)) {
-				System.out.println("El resultado de la pelea es empate");
-			        return esGanador;
-			}
-
-		} else if (this.getCaracteristica(c) > combatiente.getCaracteristica(c)) {
-			esGanador = true;
-			System.out.println("La liga " + this.getNombre() + " es la vencedora del combate");
-
-		} else if (this.getCaracteristica(c) < combatiente.getCaracteristica(c)) {
-			System.out.println("El combatiente " + combatiente.getNombre() + " es el vencedor del combate");
-		}
-		return esGanador;
-	}
-
 
 	public static HashSet<Combatiente> getCombatientes() {
 		return combatientes;
 	}
+
+
+	@Override
+	public int compare(Object o1, Object o2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+//	public boolean esGanador(Combatiente combatiente, Caracteristica c) {
+//		
+//		if (this.getEquipo().equals(combatiente.getEquipo())) {
+//			System.out.println("No se pueden enfrentar 2 combatientes del mismo equipo");
+//		}
+//		
+//		boolean esGanador = false;
+//		Caracteristica cAux;
+//		if (this.getCaracteristica(c) == combatiente.getCaracteristica(c)) {
+//			esGanador(combatiente, c.nextCaracteristica(c));
+//			cAux = c.nextCaracteristica(c);
+//
+//			if (c.equals(cAux)) {
+//				System.out.println("El resultado de la pelea es empate");
+//				return esGanador;
+//			}
+//
+//		} else if (this.getCaracteristica(c) > combatiente.getCaracteristica(c)) {
+//			esGanador = true;
+//			System.out.println("El combatiente " + this.getNombre() + " es el vencedor del combate");
+//
+//		} else if (this.getCaracteristica(c) < combatiente.getCaracteristica(c)) {
+//			System.out.println("El combatiente " + combatiente.getNombre() + " es el vencedor del combate");
+//		}
+//		return esGanador;
+//	}
 	
 }
