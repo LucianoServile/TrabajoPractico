@@ -41,10 +41,17 @@ public class Sistema {
 				int resistencia = Integer.parseInt(datos[5]);
 				int destreza = Integer.parseInt(datos[6]);
 
-				Combatiente personaje = new Heroe(nombre_Real, tipo_De_Personaje, nombre_Personaje, velocidad, fuerza,
-						resistencia, destreza);
-
+				Combatiente personaje = null;
+				if(tipo_De_Personaje == Equipo.HEROE) {
+					personaje = new Heroe(nombre_Real, nombre_Personaje, velocidad, fuerza,
+							resistencia, destreza);
+				} else {
+					personaje = new Villano(nombre_Real, nombre_Personaje, velocidad, fuerza,
+							resistencia, destreza);
+				}
+				
 				personajes.put(nombre_Personaje, personaje);
+
 
 				oneLine = lector.readLine();
 			}
