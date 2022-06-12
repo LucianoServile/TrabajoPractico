@@ -51,8 +51,4 @@ public abstract class Combatiente {
 	public Equipo getEquipo() {
 		return equipo;
 	}
-	public enum Equipo {
-		
-		HEROE, VILLANO
-	}
 }
