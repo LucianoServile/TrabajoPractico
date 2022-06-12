@@ -1,43 +1,46 @@
 package HeroesVillanos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
-public class Liga extends Combatiente {
+public class Liga extends Combatiente{
 
-	private ArrayList<Combatiente> combatientes = new ArrayList<Combatiente>();
 
-	public Liga(String nombreLiga, int velocidad, int fuerza, int resistencia, int destreza) {
-		super(nombreLiga, velocidad, fuerza, resistencia, destreza);
+	private static HashSet<Combatiente> combatientes;
+	
+	public Liga(String nombre, Equipo equipo, int velocidad, int fuerza, int resistencia, int destreza, HashSet<Combatiente> combatientes) {
+		super(nombre, equipo, velocidad, fuerza, resistencia, destreza);
+		this.combatientes = combatientes;
 	}
 
-	public void listarCombatientes() {
-
-		for (Combatiente c : combatientes) {
-			System.out.println("Combatiente: " + c.getNombre());
-		}
-	}
-
+	
 	public void agregarCombatiente(Combatiente combatiente) {
-		combatientes.add(combatiente);
-	}
-
-	public void promediarHabilidades(Caracteristica c) {
+		
+		if(this.getEquipo() == combatiente.getEquipo()) {
+			combatientes.add(combatiente);
+		} else {
+			System.err.println(combatiente.getNombre() + " No es del mismo categoria");
+		}
 		
 	}
 
-	public void eliminarCombatiente(Combatiente combatiente) {
+	private int promediarHabilidades(Caracteristica caracteristica) {
+		
+		
+		
+		
+		
+		return 0;
+		
+	}
+	
+	public void eliminarPersonaje(Combatiente combatiente) {
 		combatientes.remove(combatiente);
 	}
 
-	@Override
-	public int getCaracteristica(Caracteristica c) {
-		
-		return caracteristicas.get(c);
-	}
-	
-	// este metodo devuelve true si la liga actual le gana al combatiente ingresado de acuerdo a la 
-	// caracteristica solicitada, si empatan definen x la siguiente caracteristica.
-	//falta agregar q una liga de heroes/villanos solo se pueda enfrentar a su combatiente opuesto (heroe/villano)
+
 
 	@Override
 	public boolean esGanador(Combatiente combatiente, Caracteristica c) {
@@ -60,6 +63,11 @@ public class Liga extends Combatiente {
 			System.out.println("El combatiente " + combatiente.getNombre() + " es el vencedor del combate");
 		}
 		return esGanador;
+	}
+
+
+	public static HashSet<Combatiente> getCombatientes() {
+		return combatientes;
 	}
 	
 }
