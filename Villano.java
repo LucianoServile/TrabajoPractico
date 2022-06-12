@@ -5,7 +5,7 @@ public class Villano extends Combatiente {
 	private String nombreCivil;
 
 	public Villano(String nombreCivil, String nombre, int velocidad, int fuerza, int resistencia, int destreza) {
-		super(nombre, velocidad, fuerza, resistencia, destreza);
+		super(nombre, Equipo.VILLANO, velocidad, fuerza, resistencia, destreza);
 		this.nombreCivil = nombreCivil;
 	}
 	
