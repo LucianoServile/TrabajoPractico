@@ -41,7 +41,7 @@ public class Sistema {
 				int destreza = Integer.parseInt(datos[6]);
 
 				Combatiente personaje = null;
-				if(tipo_De_Personaje == Equipo.HEROE) {
+				if(tipo_De_Personaje == Equipo.HEROE || tipo_De_Personaje == Equipo.HÉROE) {
 					personaje = new Heroe(nombre_Real, nombre_Personaje, velocidad, fuerza, resistencia, destreza);
 
 				} else {
