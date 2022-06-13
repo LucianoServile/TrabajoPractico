@@ -2,6 +2,6 @@ package HeroesVillanos;
 
 public enum Equipo {
   
-	HEROE, VILLANO
+	HÉROE, HEROE, VILLANO
 
 }
