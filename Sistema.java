@@ -32,8 +32,7 @@ public class Sistema {
 
 			while (oneLine != null) {
 				String[] datos = oneLine.split(", ");
-
-				Equipo tipo_De_Personaje = Equipo.valueOf(datos[0]);;
+				Equipo tipo_De_Personaje = Equipo.valueOf(datos[0].toUpperCase());;
 				String nombre_Real = datos[1];
 				String nombre_Personaje = datos[2];
 				int velocidad = Integer.parseInt(datos[3]);
@@ -43,8 +42,8 @@ public class Sistema {
 
 				Combatiente personaje = null;
 				if(tipo_De_Personaje == Equipo.HEROE) {
-					personaje = new Heroe(nombre_Real, nombre_Personaje, velocidad, fuerza,
-							resistencia, destreza);
+					personaje = new Heroe(nombre_Real, nombre_Personaje, velocidad, fuerza, resistencia, destreza);
+
 				} else {
 					personaje = new Villano(nombre_Real, nombre_Personaje, velocidad, fuerza,
 							resistencia, destreza);
