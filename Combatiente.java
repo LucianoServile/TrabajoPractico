@@ -10,6 +10,7 @@ public abstract class Combatiente {
 	public Combatiente(String nombre, Equipo equipo, int velocidad, int fuerza, int resistencia, int destreza) {
 		this.nombre = nombre;
 		this.equipo = equipo;
+		this.caracteristicas = new HashMap<Caracteristica,Integer>();
 		caracteristicas.put(Caracteristica.FUERZA, fuerza);
 		caracteristicas.put(Caracteristica.VELOCIDAD, velocidad);
 		caracteristicas.put(Caracteristica.DESTREZA, destreza);
