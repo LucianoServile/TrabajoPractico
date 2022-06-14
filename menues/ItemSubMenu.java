@@ -31,4 +31,16 @@ public class ItemSubMenu extends ItemAbstracto{
 			i++;
 		}
 	}
+	
+	public ItemAbstracto getOpcion(String nombre) {
+		Iterator<ItemAbstracto> itr = this.opciones.listIterator();
+		ItemAbstracto itemAux, retorno = null;
+		while(itr.hasNext()) {
+			itemAux = itr.next();
+			if(itemAux.getNombre() == nombre) {
+				retorno = itemAux;
+			}
+		}
+		return retorno;
+	}
 }
