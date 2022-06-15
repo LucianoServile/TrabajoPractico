@@ -79,13 +79,13 @@ public class Liga extends Combatiente{
 	
 	public TreeSet<Integer> listarCombatienteOrdenado(Caracteristica c){
 		
-		TreeSet<Integer> myTreeSet = new TreeSet<Integer>();
+		TreeSet<Integer> listaOrdenada = new TreeSet<Integer>();
 		
 		for(Combatiente comb : combatientes) {
-			myTreeSet.add(comb.getCaracteristica(c));
+			listaOrdenada.add(comb.getCaracteristica(c));
 		}
 		
-		return myTreeSet;
+		return listaOrdenada;
 	}
 	
 }
