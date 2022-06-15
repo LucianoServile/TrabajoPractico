@@ -55,16 +55,16 @@ public class SubMenuReporte extends ItemSimple {
 		Iterator<Entry<String, Liga>> itr2 = this.ligas.entrySet().iterator();
 
 		while (itr1.hasNext()) {
-			int resultado = itr1.next().getValue()
-					.compareTo(this.personajes.get(combatiente), c);
+			int resultado = this.personajes.get(combatiente)
+					.compareTo(itr1.next().getValue(), c);
 			if (resultado == -1) {
 				nombres += itr1.next().getValue().getNombre();
 			}
 		}
 
 		while (itr2.hasNext()) {
-			int resultado = itr2.next().getValue()
-					.compareTo(this.personajes.get(combatiente), c);
+			int resultado = this.personajes.get(combatiente)
+					.compareTo(itr2.next().getValue(), c);
 			if (resultado == -1) {
 				nombres += itr1.next().getValue().getNombre();
 			}
