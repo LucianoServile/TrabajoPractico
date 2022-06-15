@@ -4,12 +4,12 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
-public class SubMenuReportes extends ItemSimple {
+public class SubMenuReporte extends ItemSimple {
 
 	private HashMap<String, Combatiente> personajes;
 	private HashMap<String, Liga> ligas;
 
-	public SubMenuReportes(String nombre) {
+	public SubMenuReporte(String nombre) {
 		super(nombre);
 
 	}
