@@ -22,7 +22,28 @@ public class SubMenuPersonajes extends ItemSimple {
 	
 	@Override
 	public void ejecutarFuncion() {
-		
+		System.out.println("Opcion 1 : Carga desde archivo");
+		System.out.println("Opcion 2 : Crear personaje");
+		System.out.println("Opcion 3 : Listado de personaje");
+		System.out.println("Opcion 4 : Guardar en archivo personaje");
+		Scanner entrada = new Scanner(System.in);
+		int eleccion = entrada.nextInt();
+		switch (eleccion) {
+		case 1: {
+			cargaArchivoPersonajes();
+
+		}
+		case 2: {
+			crearPersonaje();;
+		}
+		case 3: {
+			listarPersonajes();
+		}
+		case 4 : {
+			guardarEnArchivoPersonajes();
+		}
+
+		}
 	}
 
 	public void cargaArchivoPersonajes() {
