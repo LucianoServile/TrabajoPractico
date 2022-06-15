@@ -38,15 +38,6 @@ package HeroesVillanos;
 	public static HashSet<Combatiente> getCombatientes() {
 		return combatientes;
 	}
-
-	
-	public int compareTo(Liga otraLiga, Caracteristica c) {
-		return Integer.compare(this.getCaracteristica(c),otraLiga.getCaracteristica(c) );
-	}
-	
-	public int compareTo(Combatiente otroCombatiente, Caracteristica c) {
-		return Integer.compare(this.getCaracteristica(c),otroCombatiente.getCaracteristica(c) );
-	}
 	
 	
 	public TreeSet<Integer> listarCombatienteOrdenado(Caracteristica c){
