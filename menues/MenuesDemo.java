@@ -3,7 +3,7 @@ package menues;
 public class MenuesDemo {
 	
 	public static void main(String[] args) {
-		MenuPrincipal menu = MenuPrincipal.getInstance("El senior de los anillos"); //@todo make menuPrincipal un SubMenuItem
+		MenuPrincipal menu = MenuPrincipal.getInstance(); //@todo make menuPrincipal un SubMenuItem
 		menu.agregarOpciones(new ItemSubMenu("Submenu1"));
 		menu.agregarOpciones(new ItemSubMenu("Submenu2"));
 		menu.agregarOpciones(new ItemSubMenu("Submenu3"));
@@ -14,7 +14,7 @@ public class MenuesDemo {
 		
 		menu.agregarOpciones(subMenuBatallar);
 		menu.agregarOpciones(new OpcionSalir());
-		menu.listarOpciones();
+		menu.ejecutarFuncionMenuPrincipal();
 		
 		subMenuBatallar.add(new BatallarOp1("Batalla 1 vs 1 , Batalla 1 vs Liga, Batalla Liga vs Liga"));
 		subMenuBatallar.add(new OpcionSalir());

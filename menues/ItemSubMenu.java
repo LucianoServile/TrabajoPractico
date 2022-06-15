@@ -1,5 +1,8 @@
 package menues;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -17,7 +20,24 @@ public class ItemSubMenu extends ItemAbstracto{
 	}
 	
 	public void ejecutarFuncion(){
+		InputStreamReader reader = new InputStreamReader(System.in);
+		BufferedReader in = new BufferedReader(reader);
+		String entrada = "";
+		int entradaInt;
 		listarOpciones();
+		try {
+			entrada = in.readLine();
+		}catch(IOException E) {
+			System.err.println(E);
+		}
+		System.out.println("la entrada es : " + entrada);
+		entradaInt = Integer.parseInt(entrada);
+		try {
+			getOpcion(entradaInt);
+		}catch(IOException E) {
+			System.err.println(E);
+		}
+		
 	}
 	
 	
@@ -32,14 +52,20 @@ public class ItemSubMenu extends ItemAbstracto{
 		}
 	}
 	
-	public ItemAbstracto getOpcion(String nombre) {
+	public ItemAbstracto getOpcion(int entradaInt) throws IOException {
+		int i = 0;
 		Iterator<ItemAbstracto> itr = this.opciones.listIterator();
 		ItemAbstracto itemAux, retorno = null;
-		while(itr.hasNext()) {
+		System.out.println("size: "+ opciones.size());
+		if(entradaInt < 0 || entradaInt > opciones.size() - 1) {
+			throw new IOException("Error de entrada de datos"); //@todo create new exception
+		}
+		while(itr.hasNext() && i != entradaInt) {
 			itemAux = itr.next();
 			if(itemAux.getNombre() == nombre) {
 				retorno = itemAux;
 			}
+			i++;
 		}
 		return retorno;
 	}
