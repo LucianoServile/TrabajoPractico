@@ -18,8 +18,7 @@ import java.util.HashMap;
 	public boolean esGanador(Combatiente combatiente, Caracteristica c) {
 
 		if (this.getEquipo().equals(combatiente.getEquipo())) {
-			System.out
-					.println("No se pueden enfrentar 2 combatientes del mismo equipo");
+			System.out.println("No se pueden enfrentar 2 combatientes del mismo equipo");
 		}
 
 		boolean esGanador = false;
@@ -48,8 +47,7 @@ import java.util.HashMap;
 	public boolean esGanador(Liga liga, Caracteristica c) {
 
 		if (this.getEquipo().equals(liga.getEquipo())) {
-			System.out
-					.println("No se pueden enfrentar 2 ligas del mismo equipo");
+			System.out.println("No se pueden enfrentar 2 ligas del mismo equipo");
 		}
 
 		boolean esGanador = false;
@@ -85,6 +83,10 @@ import java.util.HashMap;
 
 	public Equipo getEquipo() {
 		return equipo;
+	}
+	
+	public int compareTo(Liga otraLiga, Caracteristica c) {
+		return Integer.compare(this.getCaracteristica(c),otraLiga.getCaracteristica(c) );
 	}
 	
 	public int compareTo(Combatiente otroCombatiente, Caracteristica c) {
