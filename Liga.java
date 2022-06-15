@@ -77,8 +77,15 @@ public class Liga extends Combatiente{
 //		return esGanador;
 //	}
 	
-	public List<Combatiente> listarCombatienteOrdenado(Caracteristica c){
-		return null;
+	public TreeSet<Integer> listarCombatienteOrdenado(Caracteristica c){
+		
+		TreeSet<Integer> myTreeSet = new TreeSet<Integer>();
+		
+		for(Combatiente comb : combatientes) {
+			myTreeSet.add(comb.getCaracteristica(c));
+		}
+		
+		return myTreeSet;
 	}
 	
 }
