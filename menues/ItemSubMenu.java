@@ -24,6 +24,13 @@ public class ItemSubMenu extends ItemAbstracto{
 		BufferedReader in = new BufferedReader(reader);
 		String entrada = "";
 		int entradaInt;
+		ItemAbstracto aux;
+		
+		if(this.opciones.size() ==0) {
+			System.err.println("No hay opciones para displayar");
+			return;
+		}
+		
 		listarOpciones();
 		try {
 			entrada = in.readLine();
@@ -33,11 +40,17 @@ public class ItemSubMenu extends ItemAbstracto{
 		System.out.println("la entrada es : " + entrada);
 		entradaInt = Integer.parseInt(entrada);
 		try {
-			getOpcion(entradaInt);
+			aux = getOpcion(entradaInt);
 		}catch(IOException E) {
 			System.err.println(E);
+			return;
 		}
-		
+		try {
+			aux.ejecutarFuncion();
+		}catch(NullPointerException E){
+			System.err.println();
+			return;
+		}
 	}
 	
 	
@@ -55,16 +68,15 @@ public class ItemSubMenu extends ItemAbstracto{
 	public ItemAbstracto getOpcion(int entradaInt) throws IOException {
 		int i = 0;
 		Iterator<ItemAbstracto> itr = this.opciones.listIterator();
-		ItemAbstracto itemAux, retorno = null;
+		ItemAbstracto retorno = null;
 		System.out.println("size: "+ opciones.size());
 		if(entradaInt < 0 || entradaInt > opciones.size() - 1) {
 			throw new IOException("Error de entrada de datos"); //@todo create new exception
 		}
+		retorno = itr.next();
+		
 		while(itr.hasNext() && i != entradaInt) {
-			itemAux = itr.next();
-			if(itemAux.getNombre() == nombre) {
-				retorno = itemAux;
-			}
+			retorno = itr.next();
 			i++;
 		}
 		return retorno;
