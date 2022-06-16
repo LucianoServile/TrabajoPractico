@@ -67,7 +67,6 @@ public class LigaTest {
 		liga.agregarCombatiente(c2);
 		liga.agregarCombatiente(c3);
 		liga.listarCombatienteOrdenado(Caracteristica.VELOCIDAD);
-		liga.compare(c1, c2);
 		
 		int[] resultadoOrdenado = {1,3,5};
 		Assert.assertEquals(resultadoOrdenado, liga.listarCombatienteOrdenado(Caracteristica.VELOCIDAD));
