@@ -4,6 +4,8 @@ import java.util.HashMap;
 	private Equipo equipo;
 	private HashMap<Caracteristica, Integer> caracteristicas;
 
+public abstract class Combatiente implements Comparator<Combatiente> {
+
 	public Combatiente(String nombre, Equipo equipo, int velocidad, int fuerza,
 			int resistencia, int destreza) {
 		this.nombre = nombre;
