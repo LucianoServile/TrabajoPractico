@@ -1,5 +1,7 @@
 package HeroesVillanos;
 
+public class Liga extends Combatiente{
+	
 	private static HashSet<Combatiente> combatientes;
 	
 	public Liga(String nombre, Equipo equipo, int velocidad, int fuerza, int resistencia, int destreza, HashSet<Combatiente> combatientes) {
