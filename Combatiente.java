@@ -18,6 +18,11 @@ public abstract class Combatiente {
 	}
 
 	public boolean esGanador(Combatiente combatiente, Caracteristica c) {
+		try {
+			examinarEquipo(combatiente, c);
+		} catch (PeleasEntreElMismoEquipoExcepcion e) {
+			System.err.println("No se pueden enfrentar 2 combatientes del mismo equipo!!!");
+		}
 
 		boolean esGanador = false;
 		Caracteristica aux = c;
@@ -42,11 +47,17 @@ public abstract class Combatiente {
 						"El combatiente " + combatiente.getNombre() + " es el vencedor del combate por " + aux);
 			}
 
-		} else {
-			System.err.println("No se pueden enfrentar 2 combatientes del mismo equipo");
 		}
 
 		return esGanador;
+	}
+	
+	private boolean examinarEquipo(Combatiente c, Caracteristica caracteristica) throws PeleasEntreElMismoEquipoExcepcion {
+		boolean diferenteEquipo = true;
+		if (this.getEquipo().equals(c.getEquipo())) {
+			throw new PeleasEntreElMismoEquipoExcepcion();
+		}
+		return diferenteEquipo;
 	}
 
 	public int getCaracteristica(Caracteristica c) {
