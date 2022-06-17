@@ -91,7 +91,7 @@ public class PersonajeTest {
 		 * RESISTENCIA AMBOS 90
 		 */
 
-		Assert.assertEquals(false, p2.esGanador(p1, Caracteristica.RESISTENCIA));
+		Assert.assertTrue(p2.esGanador(p1, Caracteristica.RESISTENCIA));
 
 	}
 
@@ -104,15 +104,40 @@ public class PersonajeTest {
 		 * DESTREZA AMBOS 90
 		 */
 
-		Assert.assertFalse(p2.esGanador(p1, Caracteristica.DESTREZA));
+		Assert.assertFalse(p2.esGanador(p1, Caracteristica.VELOCIDAD));
 
 	}
 
 	@Test
 	public void comparaUnCombatienteConUnaLigaYGanariaCombatiente() {
 		Combatiente p1 = new Heroe("Clark Kent", Equipo.HEROE, "Superman", 98, 98, 97, 96);
-		Liga L1 = new Liga("Liga de la injusticia", Equipo.VILLANO, 78, 84, 85, 83, null);
+		Liga L1 = new Liga("Liga de la injusticia", Equipo.VILLANO, 97, 84, 85, 83, null);
 		// compare to devuelve 1 Si superman es superior a la liga
 		Assert.assertEquals(1, p1.compareTo(L1, Caracteristica.VELOCIDAD));
 	}
+	
+	@Test
+	public void comparaUnCombatienteConUnaLigaYGanariaLiga() {
+		Combatiente p1 = new Heroe("Clark Kent", Equipo.HEROE, "Superman", 98, 98, 97, 96);
+		Liga L1 = new Liga("Liga de la injusticia", Equipo.VILLANO, 100, 84, 85, 83, null);
+		// compare to devuelve -1 si gana la liga
+		Assert.assertEquals(-1, p1.compareTo(L1, Caracteristica.VELOCIDAD));
+	}
+	@Test
+	public void EnfrentamientoEntreligaYHeroePorFuerzaYDestreza() {
+		Combatiente p1 = new Heroe("Clark Kent", Equipo.HEROE, "Superman", 98, 98, 97, 96);
+		Liga L1 = new Liga("Liga de la injusticia", Equipo.VILLANO, 97, 99, 85, 83, null);
+		Assert.assertTrue(L1.esGanador(p1, Caracteristica.FUERZA));
+		Assert.assertFalse(L1.esGanador(p1, Caracteristica.DESTREZA));
+		
+	}
+	
+	@Test
+	public void enfrentamientoEntreHeroes() {
+		Combatiente p1 = new Heroe("Bruce Banner", Equipo.HEROE, "Hulk", 50, 98, 90, 84);
+		Combatiente p2 = new Heroe("Clark Kent", Equipo.HEROE, "Superman", 98, 98, 97, 96);
+		p1.esGanador(p2, Caracteristica.DESTREZA);
+	}
+		
+
 }
