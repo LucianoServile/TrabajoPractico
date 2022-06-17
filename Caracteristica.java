@@ -1,5 +1,3 @@
-package HeroeVillano;
-
 public enum Caracteristica {
 
 	VELOCIDAD, FUERZA, DESTREZA, RESISTENCIA;
