@@ -1,4 +1,7 @@
-package HeroesVillanos;
+
+import java.util.HashSet;
+import java.util.TreeSet;
+
 
 public class Liga extends Combatiente{
 	
@@ -7,6 +10,7 @@ public class Liga extends Combatiente{
 	public Liga(String nombre, Equipo equipo, int velocidad, int fuerza, int resistencia, int destreza, HashSet<Combatiente> combatientes) {
 		super(nombre, equipo, velocidad, fuerza, resistencia, destreza);
 		Liga.combatientes = combatientes;
+		this.combatientes = new HashSet<Combatiente>();
 	}
 
 	
@@ -22,7 +26,7 @@ public class Liga extends Combatiente{
 
 	//este mÃ©todo tiene que ser usado por otro metodo
 	
-	private double promediarHabilidades(Caracteristica caracteristica) {
+	public double promediarHabilidades(Caracteristica caracteristica) {
 		double promedio = 0;
 		int cantidad = 0;
 		for (Combatiente c: combatientes) {
