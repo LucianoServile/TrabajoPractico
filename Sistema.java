@@ -417,7 +417,7 @@ public class Sistema {
 			Iterator<Entry<String, Liga>> itr = this.ligas.entrySet()
 					.iterator();
 			while (itr.hasNext()) {
-				escritor.write(itr.next().getValue().toString());
+				escritor.write(itr.next().getValue().getNombre());
 				escritor.newLine();
 			}
 
@@ -443,19 +443,24 @@ public class Sistema {
 		Scanner entrada = new Scanner(System.in);
 		int eleccion = entrada.nextInt();
 		switch (eleccion) {
+		
 		case 1: {
+			entrada = new Scanner(System.in);
 			System.out.println("Ingrese nombre de personaje: ");
 			String nombrePersonaje = entrada.nextLine();
+			
 			System.out.println("Ingrese nombre de combatiente a enfrentar: ");
 			String nombreContrincante = entrada.nextLine();
+			
 			System.out.println("Ingrese caracteristica a determinar ganador: ");
-			Caracteristica c = Caracteristica.valueOf(entrada.nextLine()
-					.toUpperCase());
+			Caracteristica c = Caracteristica.valueOf(entrada.nextLine().toUpperCase());
 			batallar1Contra1(this.personajes,nombrePersonaje, nombreContrincante, c);
 			ejecutarFuncionBatallar();
+			entrada.close();
 
 		}
 		case 2: {
+			entrada = new Scanner(System.in);
 			System.out.println("Ingrese nombre de personaje: ");
 			String nombrePersonaje = entrada.nextLine();
 			System.out.println("Ingrese nombre de liga a enfrentar: ");
@@ -465,8 +470,10 @@ public class Sistema {
 					.toUpperCase());
 			batallar1ContraLiga(this.personajes,this.ligas,nombrePersonaje, nombreLiga, c);
 			ejecutarFuncionBatallar();
+			entrada.close();
 		}
 		case 3: {
+			entrada = new Scanner(System.in);
 			System.out.println("Ingrese nombre de liga: ");
 			String nombreLiga1 = entrada.nextLine();
 			System.out.println("Ingrese nombre de liga a quien enfrentará: "
@@ -477,6 +484,7 @@ public class Sistema {
 					.toUpperCase());
 			batallarLigaContraLiga(this.ligas,nombreLiga1, nombreLiga2, c);
 			ejecutarFuncionBatallar();
+			entrada.close();
 		}
 		case 4: {
 			menues();
@@ -484,9 +492,8 @@ public class Sistema {
 		default:
 			System.out.println("Opcion no valida");
 			ejecutarFuncionBatallar();
-		
 		}
-
+		entrada.close();
 	}
 
 	public void batallar1Contra1(HashMap<String,Combatiente> personajes,String personaje1, String personaje2,
@@ -537,7 +544,8 @@ public class Sistema {
 
 		switch (opcion) {
 
-		case 1: 
+		case 1: {
+			entrada = new Scanner(System.in);
 			System.out.println("Ingresar nombre del combatiente: ");
 			String nombre = entrada.nextLine();
 			
@@ -545,49 +553,52 @@ public class Sistema {
 			String carac = entrada.nextLine();
 			Caracteristica c1 = Caracteristica.valueOf(carac.toUpperCase());
 
-			String resultado = getCombatientesOLigasQueGananAOtroCombatiente(this.personajes,this.ligas,
+			String resultado = getCombatientesOLigasQueGananAOtroCombatiente(this.personajes, this.ligas,
 					nombre, c1);
-			System.out.println("Los combatientes que vencen a : " + nombre
+			System.out.println("Los combatientes que vencen a " + nombre
 					+ " son: " + resultado);
 			ejecutarFuncionReporte();
-		
-		case 2: 
+			entrada.close();
+		}
+		case 2:{ 
+			entrada = new Scanner(System.in);
 			System.out.println("Ingresar caractersitica: ");
 			Caracteristica c2 = Caracteristica.valueOf(entrada.nextLine()
 					.toUpperCase());
 			ejecutarFuncionReporte();
-		
-		case 3: 
+			entrada.close();
+		}
+		case 3: { 
 			menues();
-		
-		default:
+		}
+		default: {
 			System.out.println("Opcion no valida");
 			ejecutarFuncionReporte();
 		}
-
+		}
+		entrada.close();
 	}
 
-	private String getCombatientesOLigasQueGananAOtroCombatiente(HashMap<String,Combatiente> personajes, HashMap<String,Liga> ligas
+	private String getCombatientesOLigasQueGananAOtroCombatiente(HashMap<String,Combatiente> listaPersonajes, HashMap<String,Liga> listaLigas
 			,String combatiente, Caracteristica c) {
 		String nombres = " ";
-		Iterator<Entry<String, Combatiente>> itr1 = personajes.entrySet().iterator();
-		Iterator<Entry<String, Liga>> itr2 = ligas.entrySet().iterator();
+		Combatiente c1 = listaPersonajes.get(combatiente);
+		
+		Iterator<Entry<String, Combatiente>> itr1 = listaPersonajes.entrySet().iterator();
+		Iterator<Entry<String, Liga>> itr2 = listaLigas.entrySet().iterator();
 
 		while (itr1.hasNext()) {
-			int resultado = this.personajes.get(combatiente).compareTo(
-					itr1.next().getValue(), c);
-			if (resultado == -1) {
-				nombres += itr1.next().getValue().getNombre();
+			Combatiente otroComb = itr1.next().getValue();
+			if (c1.compareTo(otroComb, c) < 0) {
+				nombres += " " +otroComb.getNombre();
 			}
 		}
 
 		while (itr2.hasNext()) {
-			int resultado = this.personajes.get(combatiente).compareTo(
-					itr2.next().getValue(), c);
-			if (resultado == -1) {
-				nombres += itr1.next().getValue().getNombre();
+			Liga otraLiga = itr2.next().getValue();
+			if (c1.compareTo(otraLiga, c) < 0) {
+				nombres += " " + otraLiga.getNombre();
 			}
-
 		}
 		return nombres;
 	}
