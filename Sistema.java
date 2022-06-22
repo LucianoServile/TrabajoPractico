@@ -41,6 +41,7 @@ public class Sistema {
 		listarOpciones();
 		this.opcionMenu = ingresarOpcion(in);
 
+		while(true) {
 			switch (this.opcionMenu) {
 			case 1:
 				ejecutarFuncionPersonajes();
@@ -56,11 +57,13 @@ public class Sistema {
 			case 5:
 				System.exit(0);
 			default:
-				System.out.println("Opcion no valida");
+				System.err.println("Opcion no valida");
 				this.opcionMenu = 0;
 				listarOpciones();
+				this.opcionMenu = ingresarOpcion(in);
 				break;
 			}
+		}
 	}
 
 	private void listarOpciones() {
@@ -77,13 +80,20 @@ public class Sistema {
 	private int ingresarOpcion(BufferedReader in) {
 		String entrada = "";
 		int entradaInt;
+		
+		System.out.println("Ingrese opcion:");
 		try {
 			entrada = in.readLine();
-		} catch (IOException E) {
+			System.out.println("Entrada: " + entrada);
+		} catch (IOException E){
 			System.err.println(E);
+			return -1;
 		}
-		entradaInt = Integer.parseInt(entrada);
-
+		try {
+			entradaInt = Integer.parseInt(entrada);
+		}catch (NumberFormatException E) {
+			return -1;
+		}
 		return entradaInt;
 	}
 
@@ -92,11 +102,11 @@ public class Sistema {
 	 */
 
 	public void ejecutarFuncionPersonajes() {
-		System.out.println("Opcion 1 : Carga desde archivo");
-		System.out.println("Opcion 2 : Crear personaje");
-		System.out.println("Opcion 3 : Listado de personaje");
-		System.out.println("Opcion 4 : Guardar en archivo personaje");
-		System.out.println("Opcion 5 : Volver al menu");
+		System.out.println("1 - Carga desde archivo");
+		System.out.println("2 - Crear personaje");
+		System.out.println("3 - Listado de personajes");
+		System.out.println("4 - Guardar personajes en archivo");
+		System.out.println("5 - Volver al menu");
 
 		Scanner entrada = new Scanner(System.in);
 		int eleccion = entrada.nextInt();
@@ -120,7 +130,7 @@ public class Sistema {
 		case 5: {
 			menues();
 		}default:
-			System.out.println("Opcion no valida");
+			System.err.println("Opcion no valida");
 			ejecutarFuncionPersonajes();
 		
 		}
@@ -129,7 +139,7 @@ public class Sistema {
 	public void cargaArchivoPersonajes() {
 
 		try {
-			FileReader archivo = new FileReader("personajes.in.txt");
+			FileReader archivo = new FileReader("personajes_in.txt");
 			BufferedReader lector = new BufferedReader(archivo);
 			String oneLine = lector.readLine();
 
@@ -233,11 +243,11 @@ public class Sistema {
 	 */
 
 	public void ejecutarFuncionLigas() {
-		System.out.println("Opcion 1 : Carga desde archivo");
-		System.out.println("Opcion 2 : Crear liga");
-		System.out.println("Opcion 3 : Listado de ligas");
-		System.out.println("Opcion 4 : Guardar en archivo ligas");
-		System.out.println("Opcion 5 : Volver al menu");
+		System.out.println("1 - Carga desde archivo");
+		System.out.println("2 - Crear liga");
+		System.out.println("3 - Listado de ligas");
+		System.out.println("4 - Guardar en archivo ligas");
+		System.out.println("5 - Volver al menu");
 
 		Scanner entrada = new Scanner(System.in);
 		int eleccion = entrada.nextInt();
@@ -261,7 +271,7 @@ public class Sistema {
 		case 5: {
 			menues();
 		}default:
-			System.out.println("Opcion no valida");
+			System.err.println("Opcion no valida");
 			ejecutarFuncionLigas();
 		
 		}
@@ -277,7 +287,7 @@ public class Sistema {
 				String[] datos = oneLine.split(", ");
 				for (String dato : datos) {
 					Liga liga = null;
-					String nombre = "Liga " +dato;
+					String nombre = "Liga: " +dato;
 					try {
 					
 					if (this.personajes.get(dato) != null) {
@@ -435,10 +445,10 @@ public class Sistema {
 	 * BATALLAR
 	 */
 	public void ejecutarFuncionBatallar() {
-		System.out.println("Opcion 1 : Batalla 1 vs 1");
-		System.out.println("Opcion 2 : Batalla 1 vs Liga");
-		System.out.println("Opcion 3 : Batalla Liga vs Liga");
-		System.out.println("Opcion 4 : Volver al menu");
+		System.out.println("1 - Batalla 1 vs 1");
+		System.out.println("2 - Batalla 1 vs Liga");
+		System.out.println("3 - Batalla Liga vs Liga");
+		System.out.println("4 - Volver al menu");
 
 		Scanner entrada = new Scanner(System.in);
 		int eleccion = entrada.nextInt();
@@ -490,7 +500,7 @@ public class Sistema {
 			menues();
 		}
 		default:
-			System.out.println("Opcion no valida");
+			System.err.println("Opcion no valida");
 			ejecutarFuncionBatallar();
 		}
 		entrada.close();
@@ -536,9 +546,9 @@ public class Sistema {
 
 	public void ejecutarFuncionReporte() {
 		Scanner entrada = new Scanner(System.in);
-		System.out.println("Opcion 1: Obtener combatientes o ligas que derroten a un combatiente determinado");
-		System.out.println("Opcion 2: Listado ordenado de combatiente por determinada caracxteristica");
-		System.out.println("Opcion 3: Volver al menu");
+		System.out.println("1 - Obtener combatientes que derroten a un combatiente determinado");
+		System.out.println("2 - Listado ordenado de combatiente por determinada caracxteristica");
+		System.out.println("3 - Volver al menu");
 
 		int opcion = entrada.nextInt();
 
@@ -553,7 +563,7 @@ public class Sistema {
 			String carac = entrada.nextLine();
 			Caracteristica c1 = Caracteristica.valueOf(carac.toUpperCase());
 
-			String resultado = getCombatientesOLigasQueGananAOtroCombatiente(this.personajes, this.ligas,
+			String resultado = reporteCombatientesQueGananAOtroCombatiente(this.personajes, this.ligas,
 					nombre, c1);
 			System.out.println("Los combatientes que vencen a " + nombre
 					+ " son: " + resultado);
@@ -561,28 +571,29 @@ public class Sistema {
 			entrada.close();
 		}
 		case 2:{ 
-			entrada = new Scanner(System.in);
-			System.out.println("Ingresar caractersitica: ");
-			Caracteristica c2 = Caracteristica.valueOf(entrada.nextLine()
-					.toUpperCase());
-			ejecutarFuncionReporte();
-			entrada.close();
+			//entrada = new Scanner(System.in);
+			//System.out.println("Ingresar caractersitica: ");
+			//Caracteristica c2 = Caracteristica.valueOf(entrada.nextLine()
+			//		.toUpperCase());
+			//ejecutarFuncionReporte();
+			//entrada.close();
+			reporteCombatientesPorCaracteristicas();
 		}
 		case 3: { 
 			menues();
 		}
 		default: {
-			System.out.println("Opcion no valida");
+			System.err.println("Opcion no valida");
 			ejecutarFuncionReporte();
 		}
 		}
 		entrada.close();
 	}
 
-	private String getCombatientesOLigasQueGananAOtroCombatiente(HashMap<String,Combatiente> listaPersonajes, HashMap<String,Liga> listaLigas
+	private String reporteCombatientesOLigasQueGananAOtroCombatiente(HashMap<String,Combatiente> listaPersonajes, HashMap<String,Liga> listaLigas
 			,String combatiente, Caracteristica c) {
 		String nombres = " ";
-		Combatiente c1 = listaPersonajes.get(combatiente);
+		/*Combatiente c1 = listaPersonajes.get(combatiente);
 		
 		Iterator<Entry<String, Combatiente>> itr1 = listaPersonajes.entrySet().iterator();
 		Iterator<Entry<String, Liga>> itr2 = listaLigas.entrySet().iterator();
@@ -590,35 +601,65 @@ public class Sistema {
 		while (itr1.hasNext()) {
 			Combatiente otroComb = itr1.next().getValue();
 			if (c1.compareTo(otroComb, c) < 0) {
-				nombres += " " +otroComb.getNombre();
+				nombres += ", " +otroComb.getNombre();
 			}
 		}
-
+		
 		while (itr2.hasNext()) {
 			Liga otraLiga = itr2.next().getValue();
 			if (c1.compareTo(otraLiga, c) < 0) {
-				nombres += " " + otraLiga.getNombre();
+				nombres += ", " + otraLiga.getNombre();
 			}
-		}
+		}*/
 		return nombres;
 	}
 
-	// private void listarCombatientesPoCaracteristica(Caracteristica c) {
-	// List combatientesOrdenadosAscendentemente = new List();
-	//
-	// Iterator<Entry<String, Combatiente>> itr1 =
-	// this.personajes.entrySet().iterator();
-	// Combatiente comb = itr1.next().getValue();
-	// while (itr1.hasNext()) {
-	// int resultado =
-	// comb.compareTo(this.personajes.get(itr1.next().getValue()), c);
-	//
-	//
-	// if (resultado == -1) {
-	// comb;
-	// }
-	// }
-	//
-	// }
+	private void reporteCombatientesPorCaracteristicas() {
+		PriorityQueue<Combatiente> reporte = new PriorityQueue<Combatiente>();
+		
+		Combatiente urukhai = new Heroe("Orco","Uruk-hai", 1, 80, 40, 4);//@test, en realidad deben cargarse los del archivo
+		Combatiente merry = new Heroe("Meriadoc","Merry", 1, 80, 40, 4);
+		Combatiente pipin = new Heroe("Peregrin","Pipin", 1, 80, 40, 5);
+		Combatiente sam = new Heroe("Samsagaz","Sam", 1, 90, 40, 1);
+		Combatiente frodo = new Heroe("Frodo","El portador", 1, 90, 50, 1);
+		Combatiente morgoth = new Villano("Morgoth", "Senior oscuro", 1, 98, 2, 98);
+		Combatiente aragorn = new Heroe("Aragorn","El heredero", 1, 99, 1, 99);
+		Combatiente sauron = new Villano("Sauron", "El nigromante",98, 2, 98, 2);
+		Combatiente gandalf = new Heroe("Gandalf","El blanco",99, 1, 99, 1);
+
+		reporte.add(urukhai);
+		listarCombatientes(reporte);
+		System.out.println("--------------------");
+		reporte.add(merry);
+		listarCombatientes(reporte);
+		System.out.println("--------------------");
+		reporte.add(pipin);
+		listarCombatientes(reporte);
+		System.out.println("--------------------");
+		reporte.add(sam);
+		listarCombatientes(reporte);
+		System.out.println("--------------------");
+		reporte.add(frodo);
+		listarCombatientes(reporte);
+		System.out.println("--------------------");
+		
+		reporte.add(aragorn);
+		listarCombatientes(reporte);
+		System.out.println("--------------------");
+		reporte.add(morgoth);
+		listarCombatientes(reporte);
+		System.out.println("--------------------");
+		//prueba.cola.add(sauron);
+		//prueba.cola.add(gandalf);
+
+	}
+	
+	private void listarCombatientes(Queue<Combatiente> cola) {
+		Iterator<Combatiente> itr1 = cola.iterator();
+		
+		while(itr1.hasNext()) {
+			System.out.println(itr1.next());
+		}
+	}
 
 }
