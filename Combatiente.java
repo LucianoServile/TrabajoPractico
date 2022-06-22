@@ -79,4 +79,5 @@ public abstract class Combatiente {
 		return Integer.compare(this.getCaracteristica(c), otroCombatiente.getCaracteristica(c));
 	}
 
+	public abstract String toString();
 }
