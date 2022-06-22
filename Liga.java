@@ -58,4 +58,13 @@ public class Liga extends Combatiente{
 		return listaOrdenada;
 	}
 	
+	@Override
+	public String toString() {
+		Iterator<Combatiente> itr1 = combatientes.iterator();
+		String datos = "";
+		while(itr1.hasNext()) {
+			datos += itr1.next().getNombre()+", ";
+		}
+		return datos;
+	}
 }
