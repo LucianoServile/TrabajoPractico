@@ -1,5 +1,6 @@
+import org.junit.jupiter.api.Test;
+
 import org.junit.Assert;
-import org.junit.Test;
 
 public class CombatienteTest {
 
@@ -108,7 +109,7 @@ public class CombatienteTest {
 
 	}
 
-	@Test
+	/*@Test
 	public void comparaUnCombatienteConUnaLigaYGanariaCombatiente() {
 		Combatiente p1 = new Heroe("Clark Kent", "Superman", 98, 98, 97, 96);
 		Liga L1 = new Liga("Liga de la injusticia", Equipo.VILLANO, 97, 84, 85, 83, null);
@@ -122,7 +123,7 @@ public class CombatienteTest {
 		Liga L1 = new Liga("Liga de la injusticia", Equipo.VILLANO, 100, 84, 85, 83, null);
 		// compare to devuelve -1 si gana la liga
 		Assert.assertEquals(-1, p1.compareTo(L1, Caracteristica.VELOCIDAD));
-	}
+	}*/
 	@Test
 	public void EnfrentamientoEntreligaYHeroePorFuerzaYDestreza() {
 		Combatiente p1 = new Heroe("Clark Kent", "Superman", 98, 98, 97, 96);

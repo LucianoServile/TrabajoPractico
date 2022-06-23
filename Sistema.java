@@ -5,17 +5,20 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
 public class Sistema {
 
-	private HashMap<String, Combatiente> personajes;
+	private HashMap<String, Combatiente> personajes; //@todo se debe hacer una sola lista de Combatientes
 	private HashMap<String, Liga> ligas;
-
+	public static final int BACK = -1, INCORRECT = -2;
 	private int opcionMenu;
 
 	public Sistema() {
@@ -32,16 +35,25 @@ public class Sistema {
 
 		s.menues();
 	}
+	
+	private void listarOpciones() {
+		System.out.println("Menu principal");
+		System.out.println("1 - Personajes");
+		System.out.println("2 - Ligas");
+		System.out.println("3 - Batalla");
+		System.out.println("4 - Reportes");
+		System.out.println("5 - Salir");
+	}
 
 	private void menues() {
 		InputStreamReader reader = new InputStreamReader(System.in);
 		BufferedReader in = new BufferedReader(reader);
 		cargaArchivoPersonajes();
 		cargaArchivoLiga();
-		listarOpciones();
-		this.opcionMenu = ingresarOpcion(in);
-
 		while(true) {
+			listarOpciones();
+			
+			this.opcionMenu = ingresarOpcion();
 			switch (this.opcionMenu) {
 			case 1:
 				ejecutarFuncionPersonajes();
@@ -54,30 +66,19 @@ public class Sistema {
 				break;
 			case 4: 
 				ejecutarFuncionReporte();
+				break;
 			case 5:
 				System.exit(0);
 			default:
 				System.err.println("Opcion no valida");
-				this.opcionMenu = 0;
-				listarOpciones();
-				this.opcionMenu = ingresarOpcion(in);
 				break;
 			}
 		}
 	}
 
-	private void listarOpciones() {
-		System.out.println("Menu principal");
-		System.out.println("1 - Personajes");
-		System.out.println("2 - Ligas");
-		System.out.println("3 - Batalla");
-		System.out.println("4 - Reportes");
-		System.out.println("5 - Salir");
-
-
-	}
-
-	private int ingresarOpcion(BufferedReader in) {
+	private int ingresarOpcion() {
+		InputStreamReader reader = new InputStreamReader(System.in);
+		BufferedReader in = new BufferedReader(reader);
 		String entrada = "";
 		int entradaInt;
 		
@@ -87,12 +88,13 @@ public class Sistema {
 			System.out.println("Entrada: " + entrada);
 		} catch (IOException E){
 			System.err.println(E);
-			return -1;
+			return INCORRECT;
 		}
 		try {
 			entradaInt = Integer.parseInt(entrada);
 		}catch (NumberFormatException E) {
-			return -1;
+			System.err.println("Formato de opcion erroneo");
+			return INCORRECT;
 		}
 		return entradaInt;
 	}
@@ -101,45 +103,51 @@ public class Sistema {
 	 * PERSONAJES
 	 */
 
-	public void ejecutarFuncionPersonajes() {
+	private void listarOpcionesPersonajes() {
 		System.out.println("1 - Carga desde archivo");
 		System.out.println("2 - Crear personaje");
 		System.out.println("3 - Listado de personajes");
 		System.out.println("4 - Guardar personajes en archivo");
 		System.out.println("5 - Volver al menu");
+	}
+	
+	public void ejecutarFuncionPersonajes() {
+		int opcion = 0;
 
-		Scanner entrada = new Scanner(System.in);
-		int eleccion = entrada.nextInt();
-		switch (eleccion) {
-		case 1: {
-			cargaArchivoPersonajes();
-			ejecutarFuncionPersonajes();
-			}
-		case 2: {
-			crearPersonaje();
-			ejecutarFuncionPersonajes();
-		}
-		case 3: {
-			listarPersonajes();
-			ejecutarFuncionPersonajes();
-		}
-		case 4: {
-			guardarEnArchivoPersonajes();
-			ejecutarFuncionPersonajes();
-		}
-		case 5: {
-			menues();
-		}default:
-			System.err.println("Opcion no valida");
-			ejecutarFuncionPersonajes();
-		
+		while(true) {
+			listarOpcionesPersonajes();
+			opcion = ingresarOpcion();
+			
+			switch (opcion) {
+				case 1: {
+					cargaArchivoPersonajes();
+					break;
+				}
+				case 2: {
+					crearPersonaje();
+					break;
+				}
+				case 3: {
+					listarPersonajes();
+					break;
+				}
+				case 4: {
+					guardarEnArchivoPersonajes();
+					break;
+				}
+				case 5: {
+					return;
+				}default:
+					System.err.println("Opcion no valida");
+					break;
+				}
 		}
 	}
 
 	public void cargaArchivoPersonajes() {
 
 		try {
-			FileReader archivo = new FileReader("personajes_in.txt");
+			FileReader archivo = new FileReader("personajes2_in.txt");
 			BufferedReader lector = new BufferedReader(archivo);
 			String oneLine = lector.readLine();
 
@@ -153,6 +161,7 @@ public class Sistema {
 				int fuerza = Integer.parseInt(datos[4]);
 				int resistencia = Integer.parseInt(datos[5]);
 				int destreza = Integer.parseInt(datos[6]);
+
 
 				Combatiente personaje = null;
 	
@@ -214,7 +223,7 @@ public class Sistema {
 		Iterator<Entry<String, Combatiente>> itr = this.personajes.entrySet()
 				.iterator();
 		while (itr.hasNext()) {
-			System.out.println(itr.next().getValue().getNombre());
+			System.out.println(itr.next().getValue());
 		}
 	}
 
@@ -242,38 +251,45 @@ public class Sistema {
 	 * LIGAS
 	 */
 
-	public void ejecutarFuncionLigas() {
+	private void listarOpcionesLigas() {
 		System.out.println("1 - Carga desde archivo");
 		System.out.println("2 - Crear liga");
 		System.out.println("3 - Listado de ligas");
 		System.out.println("4 - Guardar en archivo ligas");
 		System.out.println("5 - Volver al menu");
-
-		Scanner entrada = new Scanner(System.in);
-		int eleccion = entrada.nextInt();
-		switch (eleccion) {
-		case 1: {
-			cargaArchivoLiga();
-			ejecutarFuncionLigas();
-		}
-		case 2: {
-			crearLiga();
-			ejecutarFuncionLigas();
-		}
-		case 3: {
-			listarLigas();
-			ejecutarFuncionLigas();
-		}
-		case 4: {
-			guardarEnArchivoLiga();
-			ejecutarFuncionLigas();
-		}
-		case 5: {
-			menues();
-		}default:
-			System.err.println("Opcion no valida");
-			ejecutarFuncionLigas();
+	}
+	
+	public void ejecutarFuncionLigas() {
 		
+		int opcion = 0;
+		
+		while(true) {
+			listarOpcionesLigas();
+			opcion = ingresarOpcion();
+			switch (opcion) {
+				case 1: {
+					cargaArchivoLiga();
+					break;
+				}
+				case 2: {
+					crearLiga();
+					break;
+				}
+				case 3: {
+					listarLigas();
+					break;
+				}
+				case 4: {
+					guardarEnArchivoLiga();
+					break;
+				}
+				case 5: {
+					return;
+				}default:{
+					System.err.println("Opcion no valida");
+					break;
+				}
+			}
 		}
 	}
 
@@ -444,66 +460,76 @@ public class Sistema {
 	/**
 	 * BATALLAR
 	 */
-	public void ejecutarFuncionBatallar() {
+	private void listarOpcionesBatallar() {
 		System.out.println("1 - Batalla 1 vs 1");
 		System.out.println("2 - Batalla 1 vs Liga");
 		System.out.println("3 - Batalla Liga vs Liga");
 		System.out.println("4 - Volver al menu");
-
-		Scanner entrada = new Scanner(System.in);
-		int eleccion = entrada.nextInt();
-		switch (eleccion) {
+	}
+	
+	public void ejecutarFuncionBatallar() {
 		
-		case 1: {
-			entrada = new Scanner(System.in);
-			System.out.println("Ingrese nombre de personaje: ");
-			String nombrePersonaje = entrada.nextLine();
-			
-			System.out.println("Ingrese nombre de combatiente a enfrentar: ");
-			String nombreContrincante = entrada.nextLine();
-			
-			System.out.println("Ingrese caracteristica a determinar ganador: ");
-			Caracteristica c = Caracteristica.valueOf(entrada.nextLine().toUpperCase());
-			batallar1Contra1(this.personajes,nombrePersonaje, nombreContrincante, c);
-			ejecutarFuncionBatallar();
-			entrada.close();
-
+		Scanner entrada = new Scanner(System.in);
+		int opcion = 0;
+		
+		while(true) {
+			listarOpcionesBatallar();
+			opcion = ingresarOpcion();
+			switch (opcion) {
+				
+				case 1: {
+					entrada = new Scanner(System.in);
+					System.out.println("Ingrese nombre de personaje: ");
+					String nombrePersonaje = entrada.nextLine();
+					
+					System.out.println("Ingrese nombre de combatiente a enfrentar: ");
+					String nombreContrincante = entrada.nextLine();
+					
+					System.out.println("Ingrese caracteristica a determinar ganador: ");
+					Caracteristica c = Caracteristica.valueOf(entrada.nextLine().toUpperCase());
+					batallar1Contra1(this.personajes,nombrePersonaje, nombreContrincante, c);
+					ejecutarFuncionBatallar();
+					entrada.close();
+					break;
+				}
+				case 2: {
+					entrada = new Scanner(System.in);
+					System.out.println("Ingrese nombre de personaje: ");
+					String nombrePersonaje = entrada.nextLine();
+					System.out.println("Ingrese nombre de liga a enfrentar: ");
+					String nombreLiga = entrada.nextLine();
+					System.out.println("Ingrese bajo que caracteristica combatiran: ");
+					Caracteristica c = Caracteristica.valueOf(entrada.nextLine()
+							.toUpperCase());
+					batallar1ContraLiga(this.personajes,this.ligas,nombrePersonaje, nombreLiga, c);
+					ejecutarFuncionBatallar();
+					entrada.close();
+					break;
+				}
+				case 3: {
+					entrada = new Scanner(System.in);
+					System.out.println("Ingrese nombre de liga: ");
+					String nombreLiga1 = entrada.nextLine();
+					System.out.println("Ingrese nombre de liga a quien enfrentará: "
+							+ nombreLiga1);
+					String nombreLiga2 = entrada.nextLine();
+					System.out.println("Ingrese bajo que caracteristica combatiran: ");
+					Caracteristica c = Caracteristica.valueOf(entrada.nextLine()
+							.toUpperCase());
+					batallarLigaContraLiga(this.ligas,nombreLiga1, nombreLiga2, c);
+					ejecutarFuncionBatallar();
+					entrada.close();
+					break;
+				}
+				case 4: {
+					return;
+				}
+				default:{
+					System.err.println("Opcion no valida");
+					break;
+				}
+			}
 		}
-		case 2: {
-			entrada = new Scanner(System.in);
-			System.out.println("Ingrese nombre de personaje: ");
-			String nombrePersonaje = entrada.nextLine();
-			System.out.println("Ingrese nombre de liga a enfrentar: ");
-			String nombreLiga = entrada.nextLine();
-			System.out.println("Ingrese bajo que caracteristica combatiran: ");
-			Caracteristica c = Caracteristica.valueOf(entrada.nextLine()
-					.toUpperCase());
-			batallar1ContraLiga(this.personajes,this.ligas,nombrePersonaje, nombreLiga, c);
-			ejecutarFuncionBatallar();
-			entrada.close();
-		}
-		case 3: {
-			entrada = new Scanner(System.in);
-			System.out.println("Ingrese nombre de liga: ");
-			String nombreLiga1 = entrada.nextLine();
-			System.out.println("Ingrese nombre de liga a quien enfrentará: "
-					+ nombreLiga1);
-			String nombreLiga2 = entrada.nextLine();
-			System.out.println("Ingrese bajo que caracteristica combatiran: ");
-			Caracteristica c = Caracteristica.valueOf(entrada.nextLine()
-					.toUpperCase());
-			batallarLigaContraLiga(this.ligas,nombreLiga1, nombreLiga2, c);
-			ejecutarFuncionBatallar();
-			entrada.close();
-		}
-		case 4: {
-			menues();
-		}
-		default:
-			System.err.println("Opcion no valida");
-			ejecutarFuncionBatallar();
-		}
-		entrada.close();
 	}
 
 	public void batallar1Contra1(HashMap<String,Combatiente> personajes,String personaje1, String personaje2,
@@ -544,74 +570,132 @@ public class Sistema {
 	 * REPORTE
 	 */
 
-	public void ejecutarFuncionReporte() {
-		Scanner entrada = new Scanner(System.in);
+	private void listarOpcionesReporte() {
 		System.out.println("1 - Obtener combatientes que derroten a un combatiente determinado");
 		System.out.println("2 - Listado ordenado de combatiente por determinada caracxteristica");
 		System.out.println("3 - Volver al menu");
-
-		int opcion = entrada.nextInt();
-
-		switch (opcion) {
-
-		case 1: {
-			entrada = new Scanner(System.in);
-			System.out.println("Ingresar nombre del combatiente: ");
-			String nombre = entrada.nextLine();
+	}
+	
+	public void ejecutarFuncionReporte() {
+		Scanner entrada;
+		int opcion = 0;
+		while(opcion != BACK) {
+			listarOpcionesReporte();
+			opcion = ingresarOpcion();
 			
-			System.out.println("Ingrese caracteristica: ");
-			String carac = entrada.nextLine();
-			Caracteristica c1 = Caracteristica.valueOf(carac.toUpperCase());
-
-			String resultado = reporteCombatientesQueGananAOtroCombatiente(this.personajes, this.ligas,
-					nombre, c1);
-			System.out.println("Los combatientes que vencen a " + nombre
-					+ " son: " + resultado);
-			ejecutarFuncionReporte();
-			entrada.close();
+			switch (opcion) {
+				case 1: {
+					Caracteristica c1;
+					entrada = new Scanner(System.in);
+					System.out.println("Ingresar nombre del combatiente: ");
+					String nombre = entrada.nextLine();
+					
+					System.out.println("Ingrese caracteristica: ");
+					String carac = entrada.nextLine();
+					try {
+						c1 = Caracteristica.valueOf(carac.toUpperCase());
+					}catch(IllegalArgumentException E){
+						System.err.println("Caracteristica invalida");
+						entrada.close();
+						return;
+					}
+					
+					String resultado = reporteCombatientesQueGananAOtroCombatiente(this.personajes, this.ligas,
+							nombre, c1);
+					
+					System.out.println(resultado);
+					
+					break;
+				}
+				case 2:{ 
+					reporteCombatientesPorCaracteristicas();
+					
+					break;
+				}
+				case 3: { 
+					return;
+				}
+				default: {
+					System.err.println("Opcion no valida");
+					break;
+				}
+			}
 		}
-		case 2:{ 
-			//entrada = new Scanner(System.in);
-			//System.out.println("Ingresar caractersitica: ");
-			//Caracteristica c2 = Caracteristica.valueOf(entrada.nextLine()
-			//		.toUpperCase());
-			//ejecutarFuncionReporte();
-			//entrada.close();
-			reporteCombatientesPorCaracteristicas();
-		}
-		case 3: { 
-			menues();
-		}
-		default: {
-			System.err.println("Opcion no valida");
-			ejecutarFuncionReporte();
-		}
-		}
-		entrada.close();
 	}
 
-	private String reporteCombatientesOLigasQueGananAOtroCombatiente(HashMap<String,Combatiente> listaPersonajes, HashMap<String,Liga> listaLigas
+	private String reporteCombatientesQueGananAOtroCombatiente(HashMap<String,Combatiente> listaPersonajes, HashMap<String,Liga> listaLigas
 			,String combatiente, Caracteristica c) {
-		String nombres = " ";
-		/*Combatiente c1 = listaPersonajes.get(combatiente);
+		Comparator<Combatiente> comp;
+		String resultado = "Los combatientes que vencen a " + combatiente;
+		Combatiente c1;
+		
+		try {
+			c1 = listaPersonajes.get(combatiente);
+			if(c1 == null) {
+				throw new NullPointerException();
+			}
+		}catch(NullPointerException E) {
+			System.err.println("Combatiente ingresado no existe");
+			return "Error";
+		}
+		resultado = resultado +  "(" + c1.getCaracteristica(c) + ") son : ";
 		
 		Iterator<Entry<String, Combatiente>> itr1 = listaPersonajes.entrySet().iterator();
 		Iterator<Entry<String, Liga>> itr2 = listaLigas.entrySet().iterator();
-
-		while (itr1.hasNext()) {
-			Combatiente otroComb = itr1.next().getValue();
-			if (c1.compareTo(otroComb, c) < 0) {
-				nombres += ", " +otroComb.getNombre();
-			}
-		}
 		
-		while (itr2.hasNext()) {
-			Liga otraLiga = itr2.next().getValue();
-			if (c1.compareTo(otraLiga, c) < 0) {
+		switch(c) {
+			case FUERZA:
+				comp = new ComparadorPorFuerza();
+				System.out.println("Comparamos por fuerza"); 
+				while (itr1.hasNext()) {
+					Combatiente otroComb = itr1.next().getValue();
+					if (comp.compare(listaPersonajes.get(combatiente),otroComb) < 0) {
+						resultado += ", " +otroComb.getNombre() + "(Fza: " + otroComb.getCaracteristica(c) + ") ";
+					}
+				}
+				break;
+			case VELOCIDAD:
+				comp = new ComparadorPorVelocidad();
+				System.out.println("Comparamos por velocidad"); 
+				while (itr1.hasNext()) {
+					Combatiente otroComb = itr1.next().getValue();
+					if (comp.compare(listaPersonajes.get(combatiente),otroComb) < 0) {
+						resultado += ", " +otroComb.getNombre() + "(Vel: " + otroComb.getCaracteristica(c) + ") ";
+					}
+				}
+				break;
+			case DESTREZA:
+				comp = new ComparadorPorDestreza();
+				System.out.println("Comparamos por destreza"); 
+				while (itr1.hasNext()) {
+					Combatiente otroComb = itr1.next().getValue();
+					if (comp.compare(listaPersonajes.get(combatiente),otroComb) < 0) {
+						resultado += ", " +otroComb.getNombre() + "(Dest: " + otroComb.getCaracteristica(c) + ") ";
+					}
+				}
+				break;
+			case RESISTENCIA:
+				comp = new ComparadorPorResistencia();
+				System.out.println("Comparamos por resistencia"); 
+				while (itr1.hasNext()) {
+					Combatiente otroComb = itr1.next().getValue();
+					if (comp.compare(listaPersonajes.get(combatiente),otroComb) < 0) {
+						resultado += ", " +otroComb.getNombre() + "(Res: " + otroComb.getCaracteristica(c) + ") ";
+					}
+				}
+				break;
+			default:
+				System.out.println("Caso por defecto");//logs
+				break;
+		}
+		/*while (itr2.hasNext()) {
+			Liga otraLiga = itr2.next().getValue();//@todo cambiar forma de cargar ligas para que se puedan comparar ligas correctamente
+			if (compFuerza.compare(listaLigas.get(combatiente), otraLiga) < 0) {
 				nombres += ", " + otraLiga.getNombre();
 			}
 		}*/
-		return nombres;
+		
+		return resultado;
 	}
 
 	private void reporteCombatientesPorCaracteristicas() {
@@ -649,8 +733,8 @@ public class Sistema {
 		reporte.add(morgoth);
 		listarCombatientes(reporte);
 		System.out.println("--------------------");
-		//prueba.cola.add(sauron);
-		//prueba.cola.add(gandalf);
+		reporte.add(sauron);
+		reporte.add(gandalf);
 
 	}
 	

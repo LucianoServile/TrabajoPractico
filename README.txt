@@ -62,7 +62,7 @@ Heroe: Clase hija de Combatiente, el Heroe tendra como atributos un nombre, velo
 
 Villano: Clase hija de Combatiente, el Villano tendra como atributos un nombre, velocidad, fuerza, resitencia, deztreza. Clase hija de Combatiente, el Heroe tendra un nombre, un alias, velocidad, fuerza, resitencia, deztreza.Su metodo esGanador() determinara quien es el que tiene mas velocidad, fuerza, resitencia o deztreza, comparando a otro Combatiente.
 
-Caracteristica: Clase enum donde podran elegirse entre VELOCIDAD, DESTREZA, FUERZA, RESISTENCIA. tiene un  método publico "nextCaracteristica" que dada una caracteristica, te devuelve la siguiente en la lista de prioridad.
+Caracteristica: Clase enum donde podran elegirse entre VELOCIDAD, DESTREZA, FUERZA, RESISTENCIA. Tiene un  método publico "nextCaracteristica" que dada una caracteristica, te devuelve la siguiente en la lista de prioridad.
 
 Equipo: Clase enum donde podran elegirse entre HEROE o VILLANO
 
