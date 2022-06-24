@@ -300,47 +300,27 @@ public class Sistema {
 			String oneLine = lector.readLine();
 
 			while (oneLine != null) {
+				try {	
 				String[] datos = oneLine.split(", ");
-				for (String dato : datos) {
-					Liga liga = null;
-					String nombre = "Liga: " +dato;
-					try {
-					
-					if (this.personajes.get(dato) != null) {
-
-						liga = new Liga(nombre, this.personajes.get(dato)
-									.getEquipo(),
-										this.personajes.get(dato).getCaracteristica(
-											Caracteristica.VELOCIDAD),
-										this.personajes.get(dato).getCaracteristica(
-											Caracteristica.FUERZA),
-										this.personajes.get(dato).getCaracteristica(
-											Caracteristica.RESISTENCIA),
-										this.personajes.get(dato).getCaracteristica(
-											Caracteristica.DESTREZA), null);
-							liga.agregarCombatiente(personajes.get(dato));
-							this.ligas.put(nombre, liga);
-							
-					}
-					if (this.ligas.get(dato) != null) {
-
-						liga = new Liga(
-								 "Liga " +dato,
-								this.ligas.get(dato).getEquipo(),
-								(int) this.ligas.get(dato)
-										.promediarHabilidades(
-												Caracteristica.VELOCIDAD),
-								(int) this.ligas.get(dato)
-										.promediarHabilidades(
-												Caracteristica.FUERZA),
-								(int) this.ligas.get(dato)
-										.promediarHabilidades(
-												Caracteristica.RESISTENCIA),
-								(int) this.ligas.get(dato).promediarHabilidades(
-												Caracteristica.DESTREZA),
-								this.ligas.get(dato).getCombatientes());
-						this.ligas.put(dato, liga);
-					}
+									
+						Liga liga = new Liga(datos[0], this.personajes.get(datos[0]).getEquipo(),this.personajes.get(datos[0]).getCaracteristica(
+								Caracteristica.VELOCIDAD),
+							this.personajes.get(datos[0]).getCaracteristica(
+								Caracteristica.FUERZA),
+							this.personajes.get(datos[0]).getCaracteristica(
+								Caracteristica.RESISTENCIA),
+							this.personajes.get(datos[0]).getCaracteristica(
+								Caracteristica.DESTREZA),null);
+						this.ligas.put(datos[0], liga);						
+				
+						for(String dato: datos) {
+							if(this.personajes.get(dato).getNombre().equals(dato)){
+								liga.agregarCombatiente(this.personajes.get(dato));
+							} else if(this.ligas.get(dato).getNombre().equals(dato)) {
+								liga.agregarCombatiente(this.ligas.get(dato));
+							}
+						}
+						
 					} catch (NoSuchElementException e) {
 						e.getMessage();
 
@@ -349,7 +329,7 @@ public class Sistema {
 
 					}
 
-				}
+				
 
 				oneLine = lector.readLine();
 			}
@@ -363,6 +343,7 @@ public class Sistema {
 			System.err.println("No se encontro archivo 'Ligas.in'");
 		}
 	}
+
 
 	public void crearLiga() {
 		Scanner entrada = new Scanner(System.in);
