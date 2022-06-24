@@ -229,7 +229,7 @@ public class Sistema {
 
 	public void guardarEnArchivoPersonajes() {
 		try {
-			FileWriter archivo = new FileWriter("personajes.in.txt");
+			FileWriter archivo = new FileWriter("personajes.out.txt");
 			BufferedWriter escritor = new BufferedWriter(archivo);
 			Iterator<Entry<String, Combatiente>> itr = this.personajes
 					.entrySet().iterator();
@@ -243,7 +243,7 @@ public class Sistema {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Los personajes fueron guardados en el archivo local personajes.in.txt" );
+		System.out.println("Los personajes fueron guardados en el archivo local personajes.out.txt" );
 
 	}
 
@@ -419,7 +419,7 @@ public class Sistema {
 	
 	public void guardarEnArchivoLiga() {
 		try {
-			FileWriter archivo = new FileWriter("ligas.in.txt");
+			FileWriter archivo = new FileWriter("ligas.out.txt");
 			BufferedWriter escritor = new BufferedWriter(archivo);
 			Iterator<Entry<String, Liga>> itr = this.ligas.entrySet()
 					.iterator();
@@ -432,7 +432,7 @@ public class Sistema {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Las ligas fueron guardadas en el archivo local ligas.in.txt" );
+		System.out.println("Las ligas fueron guardadas en el archivo local ligas.out.txt" );
 
 	}
 
