@@ -237,7 +237,6 @@ public class Sistema {
 				escritor.write(itr.next().getValue().toString());
 				escritor.newLine();
 			}
-
 			escritor.close();
 		} catch (IOException e) {
 			e.printStackTrace();
