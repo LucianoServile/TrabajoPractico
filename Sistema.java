@@ -310,17 +310,25 @@ public class Sistema {
 				int i = 1;
 				try {	
 					String[] datos = oneLine.split(", ");
+					String p = datos[0];
+					int s = 0;
+					while(this.personajes.get(datos[s]) == null) {
+						if(s < datos.length) {
+							s++;
+							p = datos[s]; 
+						}
+					}
 					System.out.println("Creando nueva liga");
-					if(this.ligas.containsKey("Liga " + i + " de " + datos[0])) {
+					if(this.ligas.containsKey("Liga " + i + " de " + p)) {
 						i++;
 					}
-					Liga liga = new Liga("Liga " + i + " de " + datos[0], this.personajes.get(datos[0]).getEquipo(),this.personajes.get(datos[0]).getCaracteristica(
+					Liga liga = new Liga("Liga " + i + " de " + p, this.personajes.get(p).getEquipo(),this.personajes.get(p).getCaracteristica(
 							Caracteristica.VELOCIDAD),
-						this.personajes.get(datos[0]).getCaracteristica(
+						this.personajes.get(p).getCaracteristica(
 							Caracteristica.FUERZA),
-						this.personajes.get(datos[0]).getCaracteristica(
+						this.personajes.get(p).getCaracteristica(
 							Caracteristica.RESISTENCIA),
-						this.personajes.get(datos[0]).getCaracteristica(
+						this.personajes.get(p).getCaracteristica(
 							Caracteristica.DESTREZA),null);
 					if((liga.getCaracteristica(Caracteristica.VELOCIDAD) <= 0)||
 							(liga.getCaracteristica(Caracteristica.FUERZA) <= 0)||
@@ -351,8 +359,6 @@ public class Sistema {
 					System.err.println(e.getMessage());
 				}
 
-				
-
 				oneLine = lector.readLine();
 			}
 
@@ -365,6 +371,7 @@ public class Sistema {
 			System.err.println("No se encontro archivo 'ligas_in'");
 		}
 	}
+
 
 
 	
@@ -438,7 +445,7 @@ public class Sistema {
 		}
 		System.out.println("Las ligas son: ");
 		while (itr.hasNext()) {
-			System.out.println(itr.next().getKey());
+			System.out.println(itr.next().toString());
 
 		}
 	}
