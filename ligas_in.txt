@@ -1,0 +1,5 @@
+Frodo, Gandalf, Frodo
+Frodo, Frodo
+Sauron, Gandalf, Sam, Aragorn
+Sauron, Orco, Morgoth
+Gandalf
