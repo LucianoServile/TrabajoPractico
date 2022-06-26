@@ -13,10 +13,13 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Map.Entry;
+import java.util.Collections;
+import java.util.ArrayList;
+
 
 public class Sistema {
 
-	private HashMap<String, Combatiente> personajes; //@todo se debe hacer una sola lista de Combatientes
+	private HashMap<String, Combatiente> personajes; // -- Personajes = Heroes + Villanos
 	private HashMap<String, Liga> ligas;
 	public static final int BACK = -1, INCORRECT = -2;
 	private int opcionMenu;
@@ -220,8 +223,12 @@ public class Sistema {
 	}
 
 	public void listarPersonajes() {
-		Iterator<Entry<String, Combatiente>> itr = this.personajes.entrySet()
-				.iterator();
+		Iterator<Entry<String, Combatiente>> itr = this.personajes.entrySet().iterator();
+		
+		if(this.personajes.isEmpty()) {
+			System.err.println("No hay personajes cargados");
+			return;
+		}
 		while (itr.hasNext()) {
 			System.out.println(itr.next().getValue());
 		}
@@ -229,7 +236,7 @@ public class Sistema {
 
 	public void guardarEnArchivoPersonajes() {
 		try {
-			FileWriter archivo = new FileWriter("personajes.out.txt");
+			FileWriter archivo = new FileWriter("personajes_out.txt");
 			BufferedWriter escritor = new BufferedWriter(archivo);
 			Iterator<Entry<String, Combatiente>> itr = this.personajes
 					.entrySet().iterator();
@@ -237,12 +244,13 @@ public class Sistema {
 				escritor.write(itr.next().getValue().toString());
 				escritor.newLine();
 			}
+
 			escritor.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Los personajes fueron guardados en el archivo local personajes.out.txt" );
+		System.out.println("Los personajes fueron guardados en el archivo local personajes_out.txt" );
 
 	}
 
@@ -294,15 +302,19 @@ public class Sistema {
 
 	public void cargaArchivoLiga() {
 		try {
-			FileReader archivo = new FileReader("ligas.in.txt");
+			FileReader archivo = new FileReader("ligas_in.txt");
 			BufferedReader lector = new BufferedReader(archivo);
 			String oneLine = lector.readLine();
-
+			
 			while (oneLine != null) {
+				int i = 1;
 				try {	
 				String[] datos = oneLine.split(", ");
-									
-						Liga liga = new Liga(datos[0], this.personajes.get(datos[0]).getEquipo(),this.personajes.get(datos[0]).getCaracteristica(
+						
+						if(this.ligas.containsKey("Liga " + i + " de " + datos[0])) {
+							i++;
+						}
+						Liga liga = new Liga("Liga " + i + " de " + datos[0], this.personajes.get(datos[0]).getEquipo(),this.personajes.get(datos[0]).getCaracteristica(
 								Caracteristica.VELOCIDAD),
 							this.personajes.get(datos[0]).getCaracteristica(
 								Caracteristica.FUERZA),
@@ -310,23 +322,25 @@ public class Sistema {
 								Caracteristica.RESISTENCIA),
 							this.personajes.get(datos[0]).getCaracteristica(
 								Caracteristica.DESTREZA),null);
-						this.ligas.put(datos[0], liga);						
+						this.ligas.put(liga.getNombre(), liga);						
 				
 						for(String dato: datos) {
 							if(this.personajes.get(dato).getNombre().equals(dato)){
+								System.out.println("Se encontro el personaje en la lista");
 								liga.agregarCombatiente(this.personajes.get(dato));
 							} else if(this.ligas.get(dato).getNombre().equals(dato)) {
+								System.out.println("No se encontro el personaje");
 								liga.agregarCombatiente(this.ligas.get(dato));
 							}
 						}
 						
-					} catch (NoSuchElementException e) {
-						e.getMessage();
+				} catch (NoSuchElementException e) {
+					e.getMessage();
 
-					} catch (NullPointerException e) {
-						e.getMessage();
+				} catch (NullPointerException e) {
+					e.getMessage();
 
-					}
+				}
 
 				
 
@@ -337,13 +351,14 @@ public class Sistema {
 			System.out.println("Las ligas han sido cargadas !");
 
 		} catch (FileNotFoundException e) {
-			System.err.println("No se encontro archivo 'Ligas.in'");
+			System.err.println("No se encontro archivo 'ligas_in'");
 		} catch (IOException e) {
-			System.err.println("No se encontro archivo 'Ligas.in'");
+			System.err.println("No se encontro archivo 'ligas_in'");
 		}
 	}
 
 
+	
 	public void crearLiga() {
 		Scanner entrada = new Scanner(System.in);
 		System.out.println("Ingrese nombre de la liga: ");
@@ -407,8 +422,12 @@ public class Sistema {
 	}
 
 	public void listarLigas() {
-		System.out.println("Las ligas son: ");
 		Iterator<Entry<String, Liga>> itr = this.ligas.entrySet().iterator();
+		if(this.ligas.isEmpty()) {
+			System.err.println("No hay ligas cargadas");
+			return;
+		}
+		System.out.println("Las ligas son: ");
 		while (itr.hasNext()) {
 			System.out.println(itr.next().getKey());
 
@@ -418,7 +437,7 @@ public class Sistema {
 	
 	public void guardarEnArchivoLiga() {
 		try {
-			FileWriter archivo = new FileWriter("ligas.out.txt");
+			FileWriter archivo = new FileWriter("ligas_out.txt");
 			BufferedWriter escritor = new BufferedWriter(archivo);
 			Iterator<Entry<String, Liga>> itr = this.ligas.entrySet()
 					.iterator();
@@ -431,7 +450,7 @@ public class Sistema {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Las ligas fueron guardadas en el archivo local ligas.out.txt" );
+		System.out.println("Las ligas fueron guardadas en el archivo local ligas_out.txt" );
 
 	}
 
@@ -679,46 +698,18 @@ public class Sistema {
 	}
 
 	private void reporteCombatientesPorCaracteristicas() {
-		PriorityQueue<Combatiente> reporte = new PriorityQueue<Combatiente>();
+		ArrayList<Combatiente> reporte = new ArrayList<Combatiente>();
+		Iterator<Entry<String,Combatiente>> itr1 = this.personajes.entrySet().iterator();
 		
-		Combatiente urukhai = new Heroe("Orco","Uruk-hai", 1, 80, 40, 4);//@test, en realidad deben cargarse los del archivo
-		Combatiente merry = new Heroe("Meriadoc","Merry", 1, 80, 40, 4);
-		Combatiente pipin = new Heroe("Peregrin","Pipin", 1, 80, 40, 5);
-		Combatiente sam = new Heroe("Samsagaz","Sam", 1, 90, 40, 1);
-		Combatiente frodo = new Heroe("Frodo","El portador", 1, 90, 50, 1);
-		Combatiente morgoth = new Villano("Morgoth", "Senior oscuro", 1, 98, 2, 98);
-		Combatiente aragorn = new Heroe("Aragorn","El heredero", 1, 99, 1, 99);
-		Combatiente sauron = new Villano("Sauron", "El nigromante",98, 2, 98, 2);
-		Combatiente gandalf = new Heroe("Gandalf","El blanco",99, 1, 99, 1);
-
-		reporte.add(urukhai);
-		listarCombatientes(reporte);
-		System.out.println("--------------------");
-		reporte.add(merry);
-		listarCombatientes(reporte);
-		System.out.println("--------------------");
-		reporte.add(pipin);
-		listarCombatientes(reporte);
-		System.out.println("--------------------");
-		reporte.add(sam);
-		listarCombatientes(reporte);
-		System.out.println("--------------------");
-		reporte.add(frodo);
-		listarCombatientes(reporte);
-		System.out.println("--------------------");
+		while(itr1.hasNext()) {
+			reporte.add(itr1.next().getValue());
+		}
 		
-		reporte.add(aragorn);
+		Collections.sort(reporte,new ComparadorPorTodasCaract());
 		listarCombatientes(reporte);
-		System.out.println("--------------------");
-		reporte.add(morgoth);
-		listarCombatientes(reporte);
-		System.out.println("--------------------");
-		reporte.add(sauron);
-		reporte.add(gandalf);
-
 	}
-	
-	private void listarCombatientes(Queue<Combatiente> cola) {
+
+	private void listarCombatientes(ArrayList<Combatiente> cola) {
 		Iterator<Combatiente> itr1 = cola.iterator();
 		
 		while(itr1.hasNext()) {
