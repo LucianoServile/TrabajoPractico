@@ -150,8 +150,8 @@ public class Sistema {
 	public void cargaArchivoPersonajes() {
 
 		try {
-			//FileReader archivo = new FileReader("personajes_in.txt");
-			FileReader archivo = new FileReader("personajes_test_caract_incorr.txt");
+			FileReader archivo = new FileReader("personajes_in.txt");
+			//FileReader archivo = new FileReader("personajes_test_caract_incorr.txt");
 			BufferedReader lector = new BufferedReader(archivo);
 			String oneLine = lector.readLine();
 
@@ -304,11 +304,14 @@ public class Sistema {
 	public void cargaArchivoLiga() {
 		try {
 			FileReader archivo = new FileReader("ligas_in.txt");
+			//FileReader archivo = new FileReader("ligas2_in.txt"); //@test
+			
 			BufferedReader lector = new BufferedReader(archivo);
 			String oneLine = lector.readLine();
 			while (oneLine != null) {
 				int i = 1;
-				try {	
+				try {
+
 					String[] datos = oneLine.split(", ");
 					String p = datos[0];
 					int s = 0;
@@ -335,19 +338,21 @@ public class Sistema {
 							(liga.getCaracteristica(Caracteristica.RESISTENCIA) <= 0)||
 							(liga.getCaracteristica(Caracteristica.DESTREZA) <= 0)) {
 						throw new CombatienteCaractIncorrectas();
-					}
-					this.ligas.put(liga.getNombre(), liga);						
+					}				
+					this.ligas.put(liga.getNombre(), liga);	
 					
 					System.out.println("Agregando combatientes a la nueva Liga");
-					for(String dato: datos) {
-						if(this.personajes.get(dato).getNombre().equals(dato)){
+
+					for(;s<datos.length;s++) {
+						if(this.personajes.get(datos[s]).getNombre().equals(datos[s])){
 							System.out.println("Se encontro el personaje en la lista");
-							liga.agregarCombatiente(this.personajes.get(dato));
-						} else if(this.ligas.get(dato).getNombre().equals(dato)) {
+							liga.agregarCombatiente(this.personajes.get(datos[s]));
+						} else if(this.ligas.get(datos[s]).getNombre().equals(datos[s])) {
 							System.out.println("No se encontro el personaje");
-							liga.agregarCombatiente(this.ligas.get(dato));
+							liga.agregarCombatiente(this.ligas.get(datos[s]));
 						}
 					}
+					
 						
 				} catch (NoSuchElementException e) {
 					e.getMessage();
@@ -366,14 +371,11 @@ public class Sistema {
 			System.out.println("Las ligas han sido cargadas !");
 
 		} catch (FileNotFoundException e) {
-			System.err.println("No se encontro archivo 'ligas_in'");
+			System.err.println("No se encontro archivo de entrada de ligas");
 		} catch (IOException e) {
-			System.err.println("No se encontro archivo 'ligas_in'");
+			System.err.println("Error en el archivo de ligas");
 		}
 	}
-
-
-
 	
 	public void crearLiga() {
 		Scanner entrada = new Scanner(System.in);
@@ -469,7 +471,7 @@ public class Sistema {
 		System.out.println("Las ligas fueron guardadas en el archivo local ligas_out.txt" );
 
 	}
-
+	
 	
 	
 	/**
